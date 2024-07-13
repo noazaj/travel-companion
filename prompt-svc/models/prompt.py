@@ -1,17 +1,7 @@
-from openai import OpenAI
-from promptType import PromptType
+from .promptType import PromptType
+from .client import Client
 
-client = OpenAI(
-    api_key="",
-    organization=None,
-    project=None,
-    base_url=None,
-    timeout=None,
-    max_retries=None,
-    default_headers=None,
-    default_query=None,
-    http_client=None,
-)
+client = Client().getClient()
 
 
 def prompt(promptType, options):
