@@ -54,9 +54,11 @@ main {
     margin-top: 0px;
 }
 
+/* Home ui css */
 .adventure {
     height: 100vh;
     overflow: hidden;
+    position: relative;
 }
 
 .adventure img {
@@ -80,14 +82,26 @@ main {
     margin-bottom: 1rem;
 }
 
-.get-started {
-    background: #000;
+.adventure-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.get-real-time-recs {
+    background: none;
     color: #fff;
-    border: none;
-    padding: 1rem 2rem;
+    border: 2px solid white;
+    padding: 10px 20px;
     font-size: 18px;
     cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    white-space: normal;
+    word-wrap: break-word;
     border-radius: 5px;
+    width: 200px;
+    height: 100px;
 }
 
 footer {
@@ -97,4 +111,119 @@ footer {
     position: absolute;
     width: 100%;
     bottom: 0;
+}
+
+/* Plan a trip css  */
+
+.trip-planner {
+    margin: 0 auto;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.trip-planner img {
+    width: 100%;
+    height: auto;
+    max-height: 100vh;
+    object-fit: cover;
+}
+
+.plan-your-trip-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.plan-your-trip-text {
+    position: absolute;
+    top: 44%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+}
+
+.plan-your-trip-text h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.plan-your-trip-form label {
+    font-weight: bold;
+    display: block;
+    margin: 15px;
+    font-size: 18px;
+}
+
+.plan-your-trip-form input, .trip-form textarea {
+    font-weight: bold;
+    color: #fff;
+    background-color: rgba(255, 255, 255,0.5);
+    padding: 20px;
+    width: calc(100% - 15px); /* Adjust for padding */
+    /* padding: 10px; */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 10px;
+    font-size: 14px;
+}
+
+.plan-your-trip-form textarea::placeholder {
+    font-weight: bold;
+    color: #fff; /* Change this to your desired placeholder color */
+}
+
+.plan-your-trip-form textarea {
+    font-weight: bold;
+    color: #fff;
+    background: rgba(255, 255, 255,0.5);
+    padding: 20px;
+    resize: vertical;
+    height: 100px;
+    width: calc(100% - 15px); 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.plan-your-trip-submit-btn {
+    font-weight: bold;
+    background: none;
+    color: #fff;
+    border: 2px solid white;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    white-space: normal;
+    word-wrap: break-word;
+    border-radius: 5px;
+    width: 150px;
+    height: 60px;
+}
+
+
+.plan-your-trip-output {
+    position: absolute;
+    top: 42%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+}
+
+.plan-your-trip-output h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+
+.plan-your-trip-recommendation-container {
+    background-color: rgba(255, 255, 255,0.5);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 500px; /* Placeholder height */
 }
