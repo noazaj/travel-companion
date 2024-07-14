@@ -1,44 +1,109 @@
+# CS467 Online Capstone: GPT API Challenge
+# Kongkom Hiranpradit, Connor Flattum, Nathan Swaim, Noah Zajicek
+
 from .promptType import PromptType
 from .client import Client
 
-client = Client().getClient()
+PROMPT_ITINERARY = "You are a professional vacation planner helping users \
+                    plan trips abroad. You will recommend hotels, \
+                    attractions, restaurants, shopping area, natural sites \
+                    or any other places that the user requests. You will \
+                    plan according to the budget and vacation length given \
+                    by the user. You will present the result in a format of \
+                    detailed itinerary of each day, begin from day 1 to the \
+                    last day."
 
 
-def prompt(promptType, options):
-    match(promptType):
-        case PromptType.ChatCompletions:
-            promptChatCompletions(options)
-        case PromptType.Embeddings:
-            promptEmbeddings(options)
-        case PromptType.Images:
-            promptImages(options)
-        case _:
-            raise TypeError("Invalid Prompt Type: {promptType}")
+# Prompt class used to make chat GPT prompts
+class Prompt():
 
+    def __init__(self) -> None:
+        self.client = Client().getClient()
 
-def promptChatCompletions(options):
-    return client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a poetic assistant,\
-             skilled in explaining complex programming concepts with\
-             creative flair."},
-            {"role": "user", "content": "Compose a poem that explains\
-             the concept of recursion in programming."}
-        ]
-    )
+    ###########################################################
+    #
+    #  Prompts the ChatGPT client based on the prompt type.
+    #
+    #  Receives:
+    #   - promptType:  a PromptType enumeration of the prompt
+    #                  type
+    #   - options:     options used for the prompt
+    #
+    #  Returns:
+    #   - a response from the ChatGPT client
+    #
+    #  Throws:
+    #   - TypeError:    throws TypeError if prompt type is
+    #                    invalid
+    #
+    ###########################################################
+    def prompt(self, promptType, options):
+        match(promptType):
+            case PromptType.ChatCompletions:
+                return self.promptChatCompletions(options)
+            case PromptType.Embeddings:
+                return self.promptEmbeddings(options)
+            case PromptType.Images:
+                return self.promptImages(options)
+            case _:
+                raise TypeError("Invalid Prompt Type: {promptType}")
 
+    # Helper method for Chat GPT chat completion prompts
+    def promptChatCompletions(self, options):
 
-def promptEmbeddings(options):
-    return client.embeddings.create(
-        model="text-embedding-ada-002",
-        input="The food was delicious and the waiter..."
-    )
+        try:
+            # Make call to chat GPT API
+            completion = self.client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": PROMPT_ITINERARY
+                            }
+                        ]
+                    },
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": options.get('text')
+                            }
+                        ]
+                    }
+                ],
+                temperature=1,
+                max_tokens=1000,
+                top_p=1,
+                frequency_penalty=0,
+                presence_penalty=0
+            )
 
+            return completion.choices[0].message
+        except Exception as e:
+            return {
+                "err": f"Error proocessing request: {e}"
+            }
 
-def promptImages(options):
-    return client.images.generate(
-        prompt="A cute baby sea otter",
-        n=2,
-        size="1024x1024"
-    )
+    # Helper method for Chat GPT embedded prompts
+    def promptEmbeddings(self, options):
+        print(options)
+        completion = self.client.embeddings.create(
+            model="text-embedding-ada-002",
+            input=options.get('text')
+        )
+
+        return completion.to_json()
+
+    # Helper method for Chat GPT image prompts
+    def promptImages(self, options):
+        completion = self.client.images.generate(
+            prompt=options.get('text'),
+            n=2,
+            size=options.get('size')
+        )
+
+        return completion.to_json()
