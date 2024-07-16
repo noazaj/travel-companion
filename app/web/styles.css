@@ -1,0 +1,880 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #333;
+    margin: 0;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.logo img {
+    width: 5rem;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-left: 1rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #ececec;
+    font-weight: bold;
+    margin: 4rem;
+    font-size: 1.5rem;
+}
+
+.log-in {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+main {
+    margin-top: 0px;
+}
+
+/* Home ui css */
+.adventure {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.adventure img {
+    width: 100%;
+    height: auto;
+    max-height: 100vh;
+    object-fit: cover;
+}
+
+.adventure-text {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+}
+
+.adventure-text h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.adventure-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.get-real-time-recs {
+    background: none;
+    color: #fff;
+    border: 2px solid white;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    white-space: normal;
+    word-wrap: break-word;
+    border-radius: 5px;
+    width: 13rem;
+    height: 6rem;
+}
+
+footer {
+    text-align: center;
+    color: #fff;
+    padding: 1rem 0;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Plan a trip css  */
+
+.trip-planner {
+    margin: 0 auto;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.trip-planner img {
+    width: 100%;
+    height: auto;
+    max-height: 100vh;
+    object-fit: cover;
+}
+
+.plan-your-trip-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.plan-your-trip-text {
+    position: absolute;
+    top: 26rem;
+    left: 30rem;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+}
+
+.plan-your-trip-text h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.plan-your-trip-form label {
+    font-weight: bold;
+    display: block;
+    margin: 1rem;
+    font-size: 1.15rem;
+}
+
+.plan-your-trip-form input, .trip-form textarea {
+    font-weight: bold;
+    color: #fff;
+    background-color: rgba(255, 255, 255,0.5);
+    padding: 1.25rem;
+    width: calc(100% - 1rem); /* Adjust for padding */
+    /* padding: 10px; */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 1rem;
+    font-size: 1rem;
+}
+
+.plan-your-trip-form textarea::placeholder {
+    font-weight: bold;
+    color: #fff; /* Change this to your desired placeholder color */
+}
+
+.plan-your-trip-form textarea {
+    font-weight: bold;
+    color: #fff;
+    background: rgba(255, 255, 255,0.5);
+    padding: 1.25rem;
+    resize: vertical;
+    height: 100px;
+    width: calc(100% - 1rem); 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.plan-your-trip-submit-btn {
+    font-weight: bold;
+    background: none;
+    color: #fff;
+    border: 2px solid white;
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    white-space: normal;
+    word-wrap: break-word;
+    border-radius: 5px;
+    width: 11rem;
+    height: 3rem;
+    margin-top: 1rem;
+}
+
+
+.plan-your-trip-output {
+    position: absolute;
+    top: 26rem;
+    left: 80rem;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    width: 42rem;
+}
+
+.plan-your-trip-output h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+
+.plan-your-trip-recommendation-container {
+    background-color: rgba(255, 255, 255,0.5);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 32rem; /* Placeholder height */
+}
+
+
+@media (max-width: 2000px) {
+    body {
+        margin: 0;
+    }
+    
+    header {
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+    
+    .logo img {
+        width: 7rem;
+    }
+    
+    nav ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    nav ul li {
+        margin-left: 1rem;
+    }
+    
+    nav ul li a {
+        margin: 4rem;
+        font-size: 1.6rem;
+    }
+    
+    .log-in {
+        padding: 0.8rem 1.3rem;
+        border-radius: 8px;
+        width: 8rem;
+    }
+    
+    /* Home ui css */
+    
+    .adventure-text {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    
+    .adventure-text h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .get-real-time-recs {
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        border-radius: 5px;
+        width: 13rem;
+        height: 6rem;
+    }
+    
+    /* Plan a trip css  */
+    
+    .plan-your-trip-container {
+        gap: 1rem;
+        padding: 2rem;
+    }
+    
+    .plan-your-trip-text {
+        position: absolute;
+        top: 28rem;
+        left: 30rem;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 28rem;
+    }
+    
+    .plan-your-trip-text h1 {
+        font-size: 3rem;
+    }
+    
+    .plan-your-trip-form label {
+        margin: 01.3rem;
+        font-size:1.3rem;
+    }
+    
+    .plan-your-trip-form input, .trip-form textarea {
+        padding: 1.5rem;
+        width: calc(100% - 1rem); 
+        border-radius: 5px;
+        height: 0.5rem;
+        font-size: 1rem;
+    }
+
+    
+    .plan-your-trip-form textarea {
+        padding: 1.25rem;
+        height: 8rem;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+    
+    .plan-your-trip-submit-btn {
+        margin-top: 1rem;
+        padding: 0.5rem 1.5rem;
+        font-size: 1.1rem;
+        border-radius: 5px;
+        width: 11rem;
+        height: 3rem;
+    }
+    
+    .plan-your-trip-output {
+        position: absolute;
+        top: 28rem;
+        left: 85rem;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 43rem;
+    }
+    
+    .plan-your-trip-output h1 {
+        font-size: 3rem;
+    }
+    
+    
+    .plan-your-trip-recommendation-container {
+        padding: 2rem;
+        border-radius: 1rem;
+        min-height: 38rem; 
+    }
+}
+
+@media (max-width: 1800px) {
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #fff;
+        color: #333;
+        margin: 0;
+    }
+    
+    header {
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+    
+    .logo img {
+        width: 5rem;
+    }
+    
+    nav ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    nav ul li {
+        margin-left: 1rem;
+    }
+    
+    nav ul li a {
+        text-decoration: none;
+        color: #ececec;
+        font-weight: bold;
+        margin: 4rem;
+        font-size: 1.5rem;
+    }
+    
+    .log-in {
+        background: #333;
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    
+    main {
+        margin-top: 0px;
+    }
+    
+    /* Home ui css */
+    .adventure {
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .adventure img {
+        width: 100%;
+        height: auto;
+        max-height: 100vh;
+        object-fit: cover;
+    }
+    
+    .adventure-text {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #fff;
+    }
+    
+    .adventure-text h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .adventure-button-container {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+    }
+    
+    .get-real-time-recs {
+        background: none;
+        color: #fff;
+        border: 2px solid white;
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+        white-space: normal;
+        word-wrap: break-word;
+        border-radius: 5px;
+        width: 13rem;
+        height: 6rem;
+    }
+    
+    footer {
+        text-align: center;
+        color: #fff;
+        padding: 1rem 0;
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+    }
+    
+    /* Plan a trip css  */
+    
+    .trip-planner {
+        margin: 0 auto;
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .trip-planner img {
+        width: 100%;
+        height: auto;
+        max-height: 100vh;
+        object-fit: cover;
+    }
+    
+    .plan-your-trip-container {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        padding: 2rem;
+    }
+    
+    .plan-your-trip-text {
+        position: absolute;
+        top: 26rem;
+        left: 30rem;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #fff;
+    }
+    
+    .plan-your-trip-text h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .plan-your-trip-form label {
+        font-weight: bold;
+        display: block;
+        margin: 1rem;
+        font-size: 1.15rem;
+    }
+    
+    .plan-your-trip-form input, .trip-form textarea {
+        font-weight: bold;
+        color: #fff;
+        background-color: rgba(255, 255, 255,0.5);
+        padding: 1.25rem;
+        width: calc(100% - 1rem); /* Adjust for padding */
+        /* padding: 10px; */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        height: 1rem;
+        font-size: 1rem;
+    }
+    
+    .plan-your-trip-form textarea::placeholder {
+        font-weight: bold;
+        color: #fff; /* Change this to your desired placeholder color */
+    }
+    
+    .plan-your-trip-form textarea {
+        font-weight: bold;
+        color: #fff;
+        background: rgba(255, 255, 255,0.5);
+        padding: 1.25rem;
+        resize: vertical;
+        height: 100px;
+        width: calc(100% - 1rem); 
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+    
+    .plan-your-trip-submit-btn {
+        font-weight: bold;
+        background: none;
+        color: #fff;
+        border: 2px solid white;
+        padding: 0.5rem 1rem;
+        font-size: 1.1rem;
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+        white-space: normal;
+        word-wrap: break-word;
+        border-radius: 5px;
+        width: 11rem;
+        height: 3rem;
+        margin-top: 1rem;
+    }
+    
+    
+    .plan-your-trip-output {
+        position: absolute;
+        top: 26rem;
+        left: 80rem;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #fff;
+        width: 42rem;
+    }
+    
+    .plan-your-trip-output h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    
+    .plan-your-trip-recommendation-container {
+        background-color: rgba(255, 255, 255,0.5);
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        min-height: 32rem; /* Placeholder height */
+    }
+}
+
+@media (max-width: 1600px) {
+    body {
+        margin: 0;
+    }
+    
+    header {
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+    
+    .logo img {
+        width: 5rem;
+    }
+    
+    nav ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    nav ul li {
+        margin-left: 0.8rem;
+    }
+    
+    nav ul li a {
+        margin: 4rem;
+        font-size: 1.3rem;
+    }
+    
+    .log-in {
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+    }
+    
+    /* Home ui css */
+    
+    .adventure-text {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    
+    .adventure-text h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .get-real-time-recs {
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        border-radius: 5px;
+        width: 13rem;
+        height: 6rem;
+    }
+    
+    /* Plan a trip css  */
+    
+    .plan-your-trip-container {
+        gap: 1rem;
+        padding: 2rem;
+    }
+    
+    .plan-your-trip-text {
+        position: absolute;
+        top: 23rem;
+        left: 26rem;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 24rem;
+    }
+    
+    .plan-your-trip-text h1 {
+        font-size: 2.5rem;
+    }
+    
+    .plan-your-trip-form label {
+        margin: 0.7rem;
+        font-size:1.3rem;
+    }
+    
+    .plan-your-trip-form input, .trip-form textarea {
+        padding: 1.1rem;
+        width: calc(100% - 1rem); 
+        border-radius: 5px;
+        height: 0.5rem;
+        font-size: 1rem;
+    }
+
+    
+    .plan-your-trip-form textarea {
+        padding: 1.25rem;
+        height: 6rem;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+    
+    .plan-your-trip-submit-btn {
+        margin-top: 1rem;
+        padding: 0.5rem 1.5rem;
+        font-size: 1.1rem;
+        border-radius: 5px;
+        width: 11rem;
+        height: 3rem;
+    }
+    
+    .plan-your-trip-output {
+        position: absolute;
+        top: 23rem;
+        left: 70rem;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 38rem;
+    }
+    
+    .plan-your-trip-output h1 {
+        font-size: 2.5rem;
+    }
+    
+    
+    .plan-your-trip-recommendation-container {
+        padding: 2rem;
+        border-radius: 1rem;
+        min-height: 30rem; 
+    }
+}
+
+@media (max-width: 1400px) {
+    body {
+        margin: 0;
+    }
+    
+    header {
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+    
+    .logo img {
+        width: 5rem;
+    }
+    
+    nav ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    nav ul li {
+        margin-left: 0.8rem;
+    }
+    
+    nav ul li a {
+        margin: 4rem;
+        font-size: 1.1rem;
+    }
+    
+    .log-in {
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+    }
+    
+    /* Home ui css */
+    
+    .adventure-text {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    
+    .adventure-text h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .get-real-time-recs {
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        border-radius: 5px;
+        width: 13rem;
+        height: 6rem;
+    }
+    
+    /* Plan a trip css  */
+    
+    .plan-your-trip-container {
+        gap: 1rem;
+        padding: 2rem;
+    }
+    
+    .plan-your-trip-text {
+        position: absolute;
+        top: 22rem;
+        left: 24rem;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 24rem;
+    }
+    
+    .plan-your-trip-text h1 {
+        font-size: 2rem;
+    }
+    
+    .plan-your-trip-form label {
+        margin: 0.7rem;
+        font-size:1.3rem;
+    }
+    
+    .plan-your-trip-form input, .trip-form textarea {
+        padding: 1rem;
+        width: calc(100% - 1rem); 
+        border-radius: 5px;
+        height: 0.5rem;
+        font-size: 1rem;
+    }
+
+    
+    .plan-your-trip-form textarea {
+        padding: 1.25rem;
+        height: 5rem;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+    
+    .plan-your-trip-submit-btn {
+        margin-top: 1rem;
+        padding: 0.5rem 1.5rem;
+        font-size: 1.1rem;
+        border-radius: 5px;
+        width: 10rem;
+        height: 2.5rem;
+    }
+    
+    .plan-your-trip-output {
+        position: absolute;
+        top: 22rem;
+        left: 62rem;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 30rem;
+    }
+    
+    .plan-your-trip-output h1 {
+        font-size: 2rem;
+    }
+    
+    
+    .plan-your-trip-recommendation-container {
+        padding: 2rem;
+        border-radius: 1rem;
+        min-height: 27rem; 
+    }
+}
