@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, url_for, session, request
+from flask import Blueprint, url_for
 from authlib.integrations.flask_client import OAuth
 import os
 
@@ -18,11 +18,13 @@ oauth.register(
     client_kwargs={'scope': 'user:email'},
 )
 
+
 # Create the login endpoint for github
 @oauth_bp.route('/login/github')
 def github_login():
     redirect_uri = url_for('oauth.github_authorize', _external=True)
     return oauth.github.authorize_redirect(redirect_uri)
+
 
 # Create the redirect authorization endpoint to show user profile
 @oauth_bp.route('/auth/github')
