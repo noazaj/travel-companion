@@ -1,23 +1,19 @@
 from flask import Flask
-from app.web.oauth import oauth, oauth_bp
+from app.web.oauth import oauth_bp, oauth
+from app.web.web import web_bp
+from dotenv import load_dotenv
+import os
 
-# Create Flask application
+load_dotenv()
+
 app = Flask(__name__)
-
-# Load configurations from config.py file
 app.config.from_object('config.DevelopmentConfig')
-
-# Initialize OAuth with the created Flask app
+    
+# Initialize OAuth and register blueprints
 oauth.init_app(app)
-
-# Register OAuth blueprint
 app.register_blueprint(oauth_bp)
-
-
-@app.route('/', methods=['GET'])
-def home():
-    return 'Welcome to the home page!'
+app.register_blueprint(web_bp, url_prefix='/')
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host=os.getenv('FLASK_RUN_HOST'), port=int(os.getenv('FLASK_RUN_PORT')))
