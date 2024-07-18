@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plan a Trip - Travel Companion</title>
-    <link rel="stylesheet" href="{{ url_for('web.static', filename='styles.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css">
 </head>
 <body>
     <header>
         <nav>
             <div class="logo">
-                <img src="{{ url_for('web.static', filename='images/logo_white.png') }}" alt="Logo">
+                <img src="{{ url_for('static', filename='images/logo_white.png') }}" alt="Logo">
             </div>
             <ul>
                 <li><a href="{{ url_for('web.home') }}">Home</a></li>
@@ -24,7 +24,7 @@
     </header>
     <main>
         <section class="adventure">
-            <img src="{{ url_for('web.static', filename='images/ocean_boats.jpg') }}" alt="Mountain">
+            <img src="{{ url_for('static', filename='images/ocean_boats.jpg') }}" alt="Mountain">
             <div class="plan-your-trip-container">
                 <div class="plan-your-trip-text">
                     <h1>Plan Your Trip</h1>
