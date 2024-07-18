@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Companion</title>
-    <link rel="stylesheet" href="styles.css" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('web.static', filename='styles.css') }}" type="text/css">
 </head>
 <body>
     <header>
         <nav>
             <div class="logo">
-                <img src="images/logo.png" alt="Logo">
+                <img src="{{ url_for('web.static', filename='images/logo_white.png') }}" alt="Logo">
             </div>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="plan-a-trip.html">Plan a Trip</a></li>
+                <li><a href="{{ url_for('web.home') }}">Home</a></li>
+                <li><a href="{{ url_for('web.plan_a_trip') }}">Plan a Trip</a></li>
                 <li><a href="#advice">Live Advice</a></li>
                 <li><a href="#history">History</a></li>
                 <li><a href="#support">Support</a></li>
@@ -24,11 +24,11 @@
     </header>
     <main>
         <section class="adventure">
-            <img src="images/mount_fuji_mst.jpg" alt="Mountain">
+            <img src="{{ url_for('web.static', filename='images/mount_fuji_mst.jpg') }}" alt="Mountain">
             <div class="adventure-text">
                 <h1>Your Adventure Starts Here</h1>
                 <div class="adventure-button-container">
-                    <button class="get-real-time-recs" onclick="location.href='plan-a-trip.html'">Plan a Trip</button>
+                    <button class="get-real-time-recs" onclick="location.href='plan-a-trip'">Plan a Trip</button>
                     <button class="get-real-time-recs">Get Real-Time Recommendations</button>
                 </div>
             </div>
