@@ -22,8 +22,9 @@ oauth.register(
     client_kwargs={'scope': 'user:email'},
 )
 
+
 ########################################
-# 
+#
 # Create the login endpoint for github
 #
 ########################################
@@ -31,6 +32,7 @@ oauth.register(
 def github_login():
     redirect_uri = url_for('oauth.github_authorize', _external=True)
     return oauth.github.authorize_redirect(redirect_uri)
+
 
 ##############################################
 #
@@ -49,7 +51,8 @@ def github_authorize():
         return redirect(url_for('oauth.profile'))
     except Exception as err:
         return f'Authorization failed: {err}', 400
-    
+
+
 ########################################
 #
 # Create a profile endpoint to display user profile
@@ -61,8 +64,11 @@ def profile():
     if not profile:
         return redirect(url_for('oauth.github_login'))
     json_profile = json.dumps(profile, indent=4)
-    return f'Hello, {profile['name']}!\n Here is your current information\n\n{json_profile}'
-
+    return (
+        f"Hello, {profile['name']}!\n\n"
+        "Here is your current information:\n\n"
+        f"{json_profile}"
+    )
 
 # Resources Used:
 # https://docs.authlib.org/en/latest/client/frameworks.html#frameworks-clients
