@@ -21,8 +21,8 @@ def configure_oauth(app):
             access_token_params=None,
             authorize_url=config['authorize_url'],
             authorize_params=None,
-            api_base_url=config['userinfo']['url'],
-            client_kwargs={'scope': ' '.join(config['scopes'])}
+            api_base_url=config['api_base_url'],
+            client_kwargs=config['client_kwargs']
         )
 
 
@@ -78,12 +78,11 @@ def oauth2_authorize(provider):
 def profile():
     profile = session.get('profile')
     if not profile:
-        return redirect(url_for('oauth.github_login'))
+        return redirect(url_for('oauth.oauth2_login'))
     json_profile = json.dumps(profile, indent=4)
     return (
         f"Hello, {profile['name']}!\n\n"
-        "Here is your current information:\n\n"
-        f"{json_profile}"
+        f"Token: {session['token']['access_token']}"
     )
 
 # Resources Used:
