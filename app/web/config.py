@@ -17,11 +17,8 @@ class Config:
             'client_secret': os.getenv('GITHUB_CLIENT_SECRET'),
             'authorize_url': 'https://github.com/login/oauth/authorize',
             'token_url': 'https://github.com/login/oauth/access_token',
-            'userinfo': {
-                'url': 'https://api.github.com/user/emails',
-                'email': lambda json: json[0]['emails'],
-            },
-            'scopes': ['user:email'],
+            'api_base_url': 'https://api.github.com/',
+            'client_kwargs': {'scope': 'user:email'},
         },
     }
 
