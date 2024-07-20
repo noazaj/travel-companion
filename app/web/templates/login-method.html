@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-in Methods</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css">
+</head>
+<p>
+    <a class="btn btn-primary" href="{{ url_for('oauth.oauth2_login', provider='google') }}">Login with Google</a>
+    <a class="btn btn-primary" href="{{ url_for('oauth.oauth2_login', provider='github') }}">Login with GitHub</a>
+</p>
+</html>

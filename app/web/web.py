@@ -20,6 +20,13 @@ def plan_a_trip():
         return render_template('plan-a-trip.html')
     except TemplateNotFound:
         abort(404)
+        
+@web_bp.route('/login-method', methods=['GET'])
+def login_method():
+    try:
+        return render_template('login-method.html')
+    except TemplateNotFound:
+        abort(404)
 
 # Resource(s) Used:
 # https://flask.palletsprojects.com/en/3.0.x/blueprints/
