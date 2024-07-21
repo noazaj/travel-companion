@@ -117,3 +117,4 @@ def profile():
 # Resources Used:
 # https://docs.authlib.org/en/latest/client/frameworks.html#frameworks-clients
 # https://flask.palletsprojects.com/en/3.0.x/blueprints/
+# https://docs.authlib.org/en/latest/client/frameworks.html
