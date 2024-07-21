@@ -4,7 +4,7 @@ from app.web.oauth import oauth, oauth_bp
 from openai import OpenAI
 from dotenv import load_dotenv
 # from flask import jsonify, send_file
-# import os
+import os
 # import requests
 # import json
 # import io
@@ -21,9 +21,12 @@ Session(app)
 
 load_dotenv()
 # This line brings all environment variables from .env into os.environ
-client = OpenAI()
+OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
+
+client = OpenAI(api_key=OPENAI_API_KEY)
 # defaults to getting the key using os.environ.get("OPENAI_API_KEY")
-# if you saved the key under a different environment variable name, you can do something like:
+# if you saved the key under a different environment variable name,
+# you can do something like:
 # client = OpenAI(
 #   api_key=os.environ.get("CUSTOM_ENV_NAME"),
 # )
