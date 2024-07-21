@@ -115,20 +115,6 @@ footer {
 
 /* Plan a trip css  */
 
-.trip-planner {
-    margin: 0 auto;
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-}
-
-.trip-planner img {
-    width: 100%;
-    height: auto;
-    max-height: 100vh;
-    object-fit: cover;
-}
-
 .plan-your-trip-container {
     display: flex;
     justify-content: center;
@@ -232,6 +218,74 @@ footer {
 }
 
 
+/* Recommendations page styles */
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.calendar {
+    top: 20rem;
+    left: 70rem;
+    width: 25%;
+    background-color: #f4f4f4;
+    padding: 1rem;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.calendar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.calendar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.calendar ul li {
+    padding: 0.5rem;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+}
+
+.calendar ul li:hover {
+    background-color: #eaeaea;
+}
+
+.recommendations {
+    top: 20rem;
+    left: 70rem;
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.weather {
+    top: 20rem;
+    left: 5rem;
+    background-color: #e3f2fd;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.recommendations-list {
+    top: 20rem;
+    left: 70rem;
+    flex: 1;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/* 
 @media (max-width: 2000px) {
     body {
         margin: 0;
@@ -276,8 +330,6 @@ footer {
         width: 8rem;
     }
     
-    /* Home ui css */
-    
     .adventure-text {
         position: absolute;
         top: 70%;
@@ -298,8 +350,6 @@ footer {
         width: 13rem;
         height: 6rem;
     }
-    
-    /* Plan a trip css  */
     
     .plan-your-trip-container {
         gap: 1rem;
@@ -426,8 +476,7 @@ footer {
     main {
         margin-top: 0px;
     }
-    
-    /* Home ui css */
+
     .adventure {
         height: 100vh;
         overflow: hidden;
@@ -486,8 +535,6 @@ footer {
         bottom: 0;
     }
     
-    /* Plan a trip css  */
-    
     .trip-planner {
         margin: 0 auto;
         height: 100vh;
@@ -535,8 +582,7 @@ footer {
         color: #fff;
         background-color: rgba(255, 255, 255,0.5);
         padding: 1.25rem;
-        width: calc(100% - 1rem); /* Adjust for padding */
-        /* padding: 10px; */
+        width: calc(100% - 1rem); 
         border: 1px solid #ccc;
         border-radius: 5px;
         height: 1rem;
@@ -545,7 +591,7 @@ footer {
     
     .plan-your-trip-form textarea::placeholder {
         font-weight: bold;
-        color: #fff; /* Change this to your desired placeholder color */
+        color: #fff; 
     }
     
     .plan-your-trip-form textarea {
@@ -601,7 +647,7 @@ footer {
         padding: 2rem;
         border-radius: 1rem;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        min-height: 32rem; /* Placeholder height */
+        min-height: 32rem; 
     }
 }
 
@@ -648,8 +694,6 @@ footer {
         border-radius: 5px;
     }
     
-    /* Home ui css */
-    
     .adventure-text {
         position: absolute;
         top: 70%;
@@ -670,8 +714,6 @@ footer {
         width: 13rem;
         height: 6rem;
     }
-    
-    /* Plan a trip css  */
     
     .plan-your-trip-container {
         gap: 1rem;
@@ -785,8 +827,6 @@ footer {
         border-radius: 5px;
     }
     
-    /* Home ui css */
-    
     .adventure-text {
         position: absolute;
         top: 70%;
@@ -807,8 +847,6 @@ footer {
         width: 13rem;
         height: 6rem;
     }
-    
-    /* Plan a trip css  */
     
     .plan-your-trip-container {
         gap: 1rem;
@@ -877,4 +915,4 @@ footer {
         border-radius: 1rem;
         min-height: 27rem; 
     }
-}
+} */
