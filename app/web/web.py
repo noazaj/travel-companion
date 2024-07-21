@@ -20,7 +20,8 @@ def plan_a_trip():
         return render_template('plan-a-trip.html')
     except TemplateNotFound:
         abort(404)
-        
+
+
 @web_bp.route('/login-method', methods=['GET'])
 def login_method():
     try:
