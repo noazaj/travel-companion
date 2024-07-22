@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Recommendations with Sidebar - Travel Companion</title>
+    <link rel="stylesheet" href="styles-real-time.css" type="text/css">
+    </head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="images/logo_white.png" alt="Logo">
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="plan-a-trip.html">Plan a Trip</a></li>
+                <li><a href="recommendations.html">Live Advice</a></li>
+                <li><a href="#history">History</a></li>
+                <li><a href="#support">Support</a></li>
+            </ul>
+            <button class="log-in">Sign In</button>
+        </nav>
+    </header>
+    <main>
+        <section class="adventure">
+            <img src="images/night_sky.jpg" alt="Coastal City">
+            <div class="container">
+                <aside class="calendar">
+                    <h1>Itinerary</h1>
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <h1 class="accordion-header" onclick="toggleAccordion('day1')">Day 1 / May 1st</h1>
+                            <div class="accordion-content" id="day1">
+                                <ul>
+                                    <li onclick="updateRecommendations('Event 1')">Event 1 - 10:00 AM</li>
+                                    <li onclick="updateRecommendations('Event 2')">Event 2 - 12:00 PM</li>
+                                    <li onclick="updateRecommendations('Event 3')">Event 3 - 3:00 PM</li>
+                                    <li onclick="updateRecommendations('Event 4')">Event 4 - 6:00 PM</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h1 class="accordion-header" onclick="toggleAccordion('day2')">Day 2 / May 2nd</h1>
+                            <div class="accordion-content" id="day2">
+                                <ul>
+                                    <li onclick="updateRecommendations('Event 1')">Event 1 - 9:00 AM</li>
+                                    <li onclick="updateRecommendations('Event 2')">Event 2 - 11:00 AM</li>
+                                    <li onclick="updateRecommendations('Event 3')">Event 3 - 2:00 PM</li>
+                                    <li onclick="updateRecommendations('Event 4')">Event 4 - 5:00 PM</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <section class="recommendations">
+                    <div class="weather">
+                        <h1>Weather Report</h1>
+                        <div class="weather-scroll">
+                            <div class="weather-hour">
+                                <p>12:00 AM</p>
+                                <img src="images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <p>65°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>1:00 AM</p>
+                                <img src="images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <p>64°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>2:00 AM</p>
+                                <img src="images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <p>63°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>3:00 AM</p>
+                                <img src="images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <p>62°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>4:00 AM</p>
+                                <img src="images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <p>61°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>5:00 AM</p>
+                                <img src="images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <p>60°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>6:00 AM</p>
+                                <img src="images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <p>61°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>7:00 AM</p>
+                                <img src="images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <p>63°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>8:00 AM</p>
+                                <img src="images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <p>68°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>9:00 AM</p>
+                                <img src="images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <p>72°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>10:00 AM</p>
+                                <img src="images/cloud-sun-solid.svg" class="partly-cloudy-icon" alt="Partly Cloudy">
+                                <p>77°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>11:00 AM</p>
+                                <img src="images/cloud-showers-heavy-solid.svg" class="rain-icon" alt="Rainy">
+                                <p>80°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>12:00 PM</p>
+                                <img src="images/cloud-bolt-solid.svg" class="storm-icon" alt="Stormy">
+                                <p>82°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>1:00 PM</p>
+                                <img src="images/cloud-showers-heavy-solid.svg" class="rain-icon" alt="Cloudy">
+                                <p>79°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>2:00 PM</p>
+                                <img src="images/cloud-solid.svg" class="cloudy-icon" alt="Cloudy">
+                                <p>78°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>3:00 PM</p>
+                                <img src="images/cloud-sun-solid.svg" class="partly-cloudy-icon" alt="Partly Cloudy">
+                                <p>80°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>4:00 PM</p>
+                                <img src="images/cloud-sun-solid.svg" class="partly-cloudy-icon" alt="Partly Cloudy">
+                                <p>81°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>5:00 PM</p>
+                                <img src="images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <p>79°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>6:00 PM</p>
+                                <img src="images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <p>78°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>7:00 PM</p>
+                                <img src="images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <p>76°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>8:00 PM</p>
+                                <img src="images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <p>73°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>9:00 PM</p>
+                                <img src="images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <p>70°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>10:00 PM</p>
+                                <img src="images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <p>68°F</p>
+                            </div>
+                            <div class="weather-hour">
+                                <p>11:00 PM</p>
+                                <img src="images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <p>66°F</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="recommendations-list">
+                        <h1>Recommendations</h1>
+                        <div id="recommendation-content">
+                            <p>Select an event to see recommendations.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Copyright © Travel Companion 2024. All Rights Reserved.</p>
+    </footer>
+    <script>
+        function toggleAccordion(id) {
+            var content = document.getElementById(id);
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        }
+
+        function updateRecommendations(event) {
+            const recommendationContent = document.getElementById('recommendation-content');
+            recommendationContent.innerHTML = `<p>Recommendations for ${event}</p>`;
+        }
+    </script>
+</body>
+</html>

@@ -4,6 +4,8 @@
 from flask import Flask, request
 from dotenv import load_dotenv, find_dotenv
 import os
+
+# from pytest import Session
 from models import promptType, prompt
 
 # Load ENV variables
@@ -13,6 +15,18 @@ load_dotenv(find_dotenv(".env"))
 app = Flask(__name__)
 HOST = os.getenv('HOST')
 PORT = os.getenv('PORT')
+
+# Load configurations from config.py file
+# app.config.from_object('config.DevelopmentConfig')
+
+# Configer Flask session variables
+app.config['SESSION_TYPE'] = 'filesystem'
+# Session(app)
+
+ERROR_MESSAGE_400 = {
+    "svc": "prompt-svc",
+    "Error": "The request body is invalid"
+    }
 
 
 ###########################################################
@@ -42,46 +56,52 @@ def index():
 #   - answer:   answer to the question prompted
 #
 ###########################################################
-@app.route('/v1/prompt/chat', methods=['GET', 'POST'])
+@app.route('/v1/prompt/itinerary', methods=['POST'])
 def chatPrompt():
 
-    history = request.args.get('history')
-    text = request.args.get('text')
+    # get json body from POST request
+    content = request.get_json()
 
-    if text is None:
-        text = (
-            "Plan me a 7 days trip to Tokyo, Japan. This is for a party of "
-            "4 adults aging from 35-38. We are interested in visiting "
-            "shopping area, enjoying local food, with a one or two night "
-            "life. We will strictly stay in Tokyo. Budget should be $1500 "
-            "per person without airfare, but include hotels, meals and other "
-            "expenses. We will be leaving from New York, USA."
-          )
-
-    answer = None
-
-    options = {
-        history: history,
-        text: text,
-    }
+    # check that the request body is valid
+    if ('messages' not in content):
+        return (ERROR_MESSAGE_400, 400)
 
     try:
         p = prompt.Prompt()
-        answer = p.prompt(promptType.PromptType.ChatCompletions,
-                          options)
+        completion = p.prompt(promptType.PromptType.ChatCompletions,
+                              content['messages'])
+
     except TypeError:
         return {
             "svc": "prompt-svc",
             "msg": "Invalid type: please use 1) chat,\
                 2) embedded, or 3) image",
-            "text": text,
-            "history": history,
+            "messages": content['messages'],
         }
 
+    # check that the request body is valid
+    if ('error' in completion):
+        return {
+            "svc": "prompt-svc",
+            "error": completion['error'],
+            "messages": content['messages'],
+        }
+
+    # manually add GPT's reply message to message log
+    new_message_object = {
+            "role": completion.choices[0].message.role,
+            "content": [
+                {
+                    "type": "text",
+                    "text": completion.choices[0].message.content
+                }
+            ]
+        }
+    content['messages'].append(new_message_object)
+
     return {
-        "history": history,
-        "text": text,
-        "answer": answer,
+        "svc": "prompt-svc",
+        "messages": content['messages'],
     }
 
 

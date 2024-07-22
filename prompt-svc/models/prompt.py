@@ -49,43 +49,24 @@ class Prompt():
                 raise TypeError("Invalid Prompt Type: {promptType}")
 
     # Helper method for Chat GPT chat completion prompts
-    def promptChatCompletions(self, options):
+    def promptChatCompletions(self, messages):
 
         try:
             # Make call to chat GPT API
             completion = self.client.chat.completions.create(
                 model="gpt-3.5-turbo",
-                messages=[
-                    {
-                        "role": "system",
-                        "content": [
-                            {
-                                "type": "text",
-                                "text": PROMPT_ITINERARY
-                            }
-                        ]
-                    },
-                    {
-                        "role": "user",
-                        "content": [
-                            {
-                                "type": "text",
-                                "text": options.get('text')
-                            }
-                        ]
-                    }
-                ],
+                messages=messages,
                 temperature=1,
-                max_tokens=1000,
                 top_p=1,
                 frequency_penalty=0,
                 presence_penalty=0
             )
-
-            return completion.choices[0].message
+            print(completion)
+            return completion
         except Exception as e:
+            print(e)
             return {
-                "err": f"Error proocessing request: {e}"
+                "error": f"Error proocessing request: {e}"
             }
 
     # Helper method for Chat GPT embedded prompts
