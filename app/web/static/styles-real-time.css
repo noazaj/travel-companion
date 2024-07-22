@@ -1,0 +1,787 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #333;
+    margin: 0;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.logo img {
+    width: 5rem;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-left: 1rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #ececec;
+    font-weight: bold;
+    margin: 4rem;
+    font-size: 1.5rem;
+}
+
+.log-in {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+main {
+    margin-top: 0px;
+}
+
+/* Home ui css */
+.adventure {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.adventure img {
+    width: 100%;
+    height: auto;
+}
+
+.adventure-text {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+}
+
+.adventure-text h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.adventure-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.get-real-time-recs {
+    background: none;
+    color: #fff;
+    border: 2px solid white;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    white-space: normal;
+    word-wrap: break-word;
+    border-radius: 5px;
+    width: 13rem;
+    height: 6rem;
+}
+
+footer {
+    text-align: center;
+    color: #fff;
+    padding: 1rem 0;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.calendar {
+    position: absolute;
+    top: 7rem;
+    left: 2rem;
+    width: 18%;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.284);
+    padding: 1rem;
+}
+
+.accordion-item {
+    margin-bottom: 10px;
+}
+
+.accordion-header {
+    background-color: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 1.2rem;
+    border: none;
+    text-align: left;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+.accordion-header:hover {
+    background-color: #ffffff6b;
+}
+
+.accordion-content {
+    display: none;
+    background-color: none;
+    padding: 10px;
+}
+
+.accordion-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.accordion-content ul li {
+    padding: 5px 0;
+    cursor: pointer;
+    color: #fff;
+}
+
+.accordion-content ul li:hover {
+    background-color: #ffffff6b;
+}
+
+.recommendations {
+    display: flex;
+    gap: 1rem;
+    padding: 2rem;
+    flex-direction: column;
+}
+
+.weather {
+    position: absolute;
+    top: 7rem;
+    left: 26rem;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.284);
+    padding: 1rem;
+    width: 70%;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.weather h1 {
+    font-size: 1.5rem;
+}
+
+.weather-hour {
+    display: inline-block;
+    text-align: center;
+    margin-right: 1rem;
+}
+
+.weather-hour img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.sunny-icon {
+    filter: brightness(0) saturate(100%) invert(73%) sepia(58%) saturate(365%) hue-rotate(351deg) brightness(101%) contrast(99%);
+}
+
+.partly-cloudy-icon {
+    filter: brightness(0) saturate(100%) invert(91%) sepia(12%) saturate(1220%) hue-rotate(325deg) brightness(106%) contrast(102%);
+}
+
+.cloudy-icon {
+    filter: brightness(0) saturate(100%) invert(75%) sepia(16%) saturate(13%) hue-rotate(316deg) brightness(91%) contrast(93%);
+}
+
+.rain-icon {
+    filter: brightness(0) saturate(100%) invert(63%) sepia(6%) saturate(2407%) hue-rotate(144deg) brightness(97%) contrast(89%);}
+
+.storm-icon {
+    filter: brightness(0) saturate(100%) invert(46%) sepia(15%) saturate(1026%) hue-rotate(156deg) brightness(86%) contrast(79%);
+}
+
+.moon-icon {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(309deg) brightness(107%) contrast(104%);
+}
+
+.recommendations-list {
+    position: absolute;
+    top: 24rem;
+    left: 26rem;
+    flex: 1;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.284);
+    width: 70%;
+    height: 25rem;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.recommendations-list h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+
+
+@media (max-width: 2000) {
+    body {
+        margin: 0;
+    }
+    
+    header {
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+    
+    .logo img {
+        width: 7rem;
+    }
+    
+    nav ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    nav ul li {
+        margin-left: 1rem;
+    }
+    
+    nav ul li a {
+        margin: 4rem;
+        font-size: 1.6rem;
+    }
+    
+    .log-in {
+        padding: 0.8rem 1.3rem;
+        border-radius: 8px;
+        width: 8rem;
+    }
+    
+    .adventure-text {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    
+    .adventure-text h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .get-real-time-recs {
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        border-radius: 5px;
+        width: 13rem;
+        height: 6rem;
+    }
+
+    /* get real time weather recs */
+
+    .recommendations {
+        display: flex;
+        gap: 1rem;
+        padding: 2rem;
+        flex-direction: column;
+    }
+    
+    .weather {
+        position: absolute;
+        top: 7rem;
+        left: 26rem;
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.284);
+        padding: 1rem;
+        width: 70%;
+        border-radius: 5px;
+        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .weather h1 {
+        font-size: 1.5rem;
+    }
+    
+    .weather-hour {
+        display: inline-block;
+        text-align: center;
+        margin-right: 1rem;
+    }
+    
+    .weather-hour img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .recommendations-list {
+        position: absolute;
+        top: 24rem;
+        left: 26rem;
+        flex: 1;
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.284);
+        width: 70%;
+        height: 25rem;
+        padding: 1rem;
+        border-radius: 5px;
+    }
+    
+    .recommendations-list h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 1800px) {
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #fff;
+        color: #333;
+        margin: 0;
+    }
+    
+    header {
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+    
+    .logo img {
+        width: 5rem;
+    }
+    
+    nav ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    nav ul li {
+        margin-left: 1rem;
+    }
+    
+    nav ul li a {
+        text-decoration: none;
+        color: #ececec;
+        font-weight: bold;
+        margin: 4rem;
+        font-size: 1.5rem;
+    }
+    
+    .log-in {
+        background: #333;
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    
+    main {
+        margin-top: 0px;
+    }
+
+    .adventure {
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .adventure img {
+        width: 100%;
+        height: auto;
+        max-height: 100vh;
+        object-fit: cover;
+    }
+    
+    .adventure-text {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #fff;
+    }
+    
+    .adventure-text h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .adventure-button-container {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+    }
+    
+    .get-real-time-recs {
+        background: none;
+        color: #fff;
+        border: 2px solid white;
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+        white-space: normal;
+        word-wrap: break-word;
+        border-radius: 5px;
+        width: 13rem;
+        height: 6rem;
+    }
+    
+    footer {
+        text-align: center;
+        color: #fff;
+        padding: 1rem 0;
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+    }
+
+     /* get real time weather recs */
+
+     .recommendations {
+        display: flex;
+        gap: 1rem;
+        padding: 2rem;
+        flex-direction: column;
+    }
+    
+    .weather {
+        position: absolute;
+        top: 7rem;
+        left: 26rem;
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.284);
+        padding: 1rem;
+        width: 68%;
+        border-radius: 5px;
+        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .weather h1 {
+        font-size: 1.5rem;
+    }
+    
+    .weather-hour {
+        display: inline-block;
+        text-align: center;
+        margin-right: 1rem;
+    }
+    
+    .weather-hour img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .recommendations-list {
+        position: absolute;
+        top: 24rem;
+        left: 26rem;
+        flex: 1;
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.284);
+        width: 68%;
+        height: 24rem;
+        padding: 1rem;
+        border-radius: 5px;
+    }
+    
+    .recommendations-list h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 1600px) {
+    body {
+        margin: 0;
+    }
+    
+    header {
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+    
+    .logo img {
+        width: 5rem;
+    }
+    
+    nav ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    nav ul li {
+        margin-left: 0.8rem;
+    }
+    
+    nav ul li a {
+        margin: 4rem;
+        font-size: 1.3rem;
+    }
+    
+    .log-in {
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+    }
+    
+    .adventure-text {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    
+    .adventure-text h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .get-real-time-recs {
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        border-radius: 5px;
+        width: 13rem;
+        height: 6rem;
+    }
+
+    .recommendations {
+        display: flex;
+        gap: 1rem;
+        padding: 2rem;
+        flex-direction: column;
+    }
+    
+    .weather {
+        position: absolute;
+        top: 7rem;
+        left: 26rem;
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.284);
+        padding: 1rem;
+        width: 67%;
+        border-radius: 5px;
+        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .weather h1 {
+        font-size: 1.5rem;
+    }
+    
+    .weather-hour {
+        display: inline-block;
+        text-align: center;
+        margin-right: 1rem;
+    }
+    
+    .weather-hour img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .recommendations-list {
+        position: absolute;
+        top: 24rem;
+        left: 26rem;
+        flex: 1;
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.284);
+        width: 67%;
+        height: 21rem;
+        padding: 1rem;
+        border-radius: 5px;
+    }
+    
+    .recommendations-list h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 1400px) {
+    body {
+        margin: 0;
+    }
+    
+    header {
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+    
+    .logo img {
+        width: 5rem;
+    }
+    
+    nav ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    nav ul li {
+        margin-left: 0.8rem;
+    }
+    
+    nav ul li a {
+        margin: 4rem;
+        font-size: 1.1rem;
+    }
+    
+    .log-in {
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+    }
+    
+    .adventure-text {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    
+    .adventure-text h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .get-real-time-recs {
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        border-radius: 5px;
+        width: 13rem;
+        height: 6rem;
+    }
+
+    .recommendations {
+        display: flex;
+        gap: 1rem;
+        padding: 2rem;
+        flex-direction: column;
+    }
+    
+    .weather {
+        position: absolute;
+        top: 7rem;
+        left: 22rem;
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.284);
+        padding: 1rem;
+        width: 67%;
+        border-radius: 5px;
+        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .weather h1 {
+        font-size: 1.5rem;
+    }
+    
+    .weather-hour {
+        display: inline-block;
+        text-align: center;
+        margin-right: 1rem;
+    }
+    
+    .weather-hour img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .recommendations-list {
+        position: absolute;
+        top: 24rem;
+        left: 22rem;
+        flex: 1;
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.284);
+        width: 67%;
+        height: 15rem;
+        padding: 1rem;
+        border-radius: 5px;
+    }
+    
+    .recommendations-list h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+}
