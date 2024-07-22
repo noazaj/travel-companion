@@ -33,9 +33,9 @@ def plan_a_trip():
 @web_bp.route('/plan-a-trip', methods=['POST'])
 def plan_a_trip_post():
 
-    print(request.args)
+    print(request.form)
     # get json body from POST request
-    content = request.args
+    content = request.form
     print(content)
     # check that the request body is valid
     if ('destination' not in content or 'num-users' not in content or
