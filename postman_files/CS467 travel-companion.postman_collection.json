@@ -1,0 +1,62 @@
+{
+	"info": {
+		"_postman_id": "6364e39c-7cd4-4bef-832b-78144267b6bd",
+		"name": "CS467 travel-companion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34310287"
+	},
+	"item": [
+		{
+			"name": "Initial chat",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"destination\": \"Tokyo, Japan\",\r\n  \"travelers_num\": \"4\",\r\n  \"days_num\": \"7\",\r\n  \"travel_preference\": \"Pick a hotel in the Shinjuku area. We will stay in one hotel the entire trip.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/gpt",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"gpt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User message",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_message\": \"I asked for a 7 days trip, please revise.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/gpt",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"gpt"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
