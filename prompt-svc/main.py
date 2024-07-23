@@ -59,6 +59,8 @@ def index():
 @app.route('/v1/prompt/itinerary', methods=['POST'])
 def chatPrompt():
 
+    print(request.get_data())
+
     # get json body from POST request
     content = request.get_json()
 
