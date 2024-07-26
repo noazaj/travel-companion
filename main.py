@@ -1,93 +1,92 @@
-# CS467 Online Capstone: GPT API Challenge
-# Kongkom Hiranpradit, Connor Flattum, Nathan Swaim, Noah Zajicek
-
 from flask import Flask, request, session
 from flask_session import Session
+from app.web.oauth import oauth, oauth_bp
 from openai import OpenAI
-from dotenv import load_dotenv, find_dotenv
-import os
+from dotenv import load_dotenv
 # from flask import jsonify, send_file
+import os
 # import requests
 # import json
 # import io
 
-# from pytest import Session
-from models import promptType, prompt
-
-# Load ENV variables
-load_dotenv(find_dotenv(".env"))
-
-OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
-client = OpenAI(api_key=OPENAI_API_KEY)
-
-# Set up Flask app
+# Create Flask application
 app = Flask(__name__)
-HOST = os.getenv('PROMPT_SVC_HOST')
-PORT = os.getenv('PROMPT_SVC_PORT')
 
 # Load configurations from config.py file
-# app.config.from_object('config.DevelopmentConfig')
+app.config.from_object('config.DevelopmentConfig')
 
 # Configer Flask session variables
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
-ERROR_MESSAGE_400 = {
-    "svc": "prompt-svc",
-    "Error": "The request body is invalid"
-    }
+load_dotenv()
+# This line brings all environment variables from .env into os.environ
+OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
+
+client = OpenAI(api_key=OPENAI_API_KEY)
+# defaults to getting the key using os.environ.get("OPENAI_API_KEY")
+# if you saved the key under a different environment variable name,
+# you can do something like:
+# client = OpenAI(
+#   api_key=os.environ.get("CUSTOM_ENV_NAME"),
+# )
+
+# Initialize OAuth with the created Flask app
+oauth.init_app(app)
+
+# Register OAuth blueprint
+app.register_blueprint(oauth_bp)
+
+ERROR_MESSAGE_400 = {"Error": "The request body is invalid"}
 
 # Message log for this session, stores all messages between GPT and user
 # an array of 'message' objects
 # 'message' objects is a dictionary of "role" and "content"
 session_messages = []
 
-###########################################################
-#
-#  Endpoint to check if prompt-svc is running
-#
-###########################################################
+
+# just for testing GPT API with a fixed message
+# returns GPT's completing message string
+@app.route('/', methods=['GET'])
+def home():
+    completion = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {
+                "role": "system",
+                "content": ("You are a poetic assistant, skilled in "
+                            "explaining complex programming concepts "
+                            "with creative flair.")
+                },
+            {
+                "role": "user",
+                "content": ("Compose a poem that explains the concept of "
+                            "recursion in programming.")
+                }
+        ]
+    )
+
+    return completion.choices[0].message.content
 
 
-@app.route('/')
-def index():
-    return {
-        "svc": "prompt-svc",
-        "msg": "prompt service is up and running!"
-    }
-
-###########################################################
-#
-#  Route to use prompts with chatGPT API
-#
-#  Receives:
-#   - history:  a history of the conversation
-#   - text:     the text of the question to ask
-#
-#  Returns:
-#   - history:  a history of the conversation
-#   - text:     the text of the question to ask
-#   - answer:   answer to the question prompted
-#
-###########################################################
-
-
-@app.route('/v1/prompt/initial-req', methods=['POST'])
-def initialRequest():
-
+# initial trip request to GPT
+# request body must include 'destination', 'travelers_num', 'days_num'
+#   and 'travel_preference'
+# returns GPT's completion message string
+@app.route('/gpt', methods=['POST'])
+def initial_gpt_chat():
+    # get json body from POST request
     content = request.get_json()
-
-    print(content)
     # check that the request body is valid
-    if ('destination' not in content or 'num-users' not in content or
-            'num-days' not in content or 'preferences' not in content):
+    if ('destination' not in content or 'travelers_num' not in content or
+            'days_num' not in content or 'travel_preference' not in content):
         return (ERROR_MESSAGE_400, 400)
 
     # extract variables from the request body content
     destination = content['destination']
-    travelers_num = content['num-users']
-    days_num = content['num-days']
-    travel_preference = content['preferences']
+    travelers_num = content['travelers_num']
+    days_num = content['days_num']
+    travel_preference = content['travel_preference']
 
     # create a session variable that stores all message logs
     # the message log is an array of 'message' objects
@@ -151,61 +150,45 @@ def initialRequest():
                 }
             ]
         }
-
     session['messages'].append(new_message_object)
 
-    print(completion.choices[0].message.content)
-
-    return ({"gpt-message": completion.choices[0].message.content}, 200)
-
-###########################################################
-#
-#  Route to use prompts with chatGPT API
-#
-#  Receives:
-#   - history:  a history of the conversation
-#   - text:     the text of the question to ask
-#
-#  Returns:
-#   - history:  a history of the conversation
-#   - text:     the text of the question to ask
-#   - answer:   answer to the question prompted
-#
-###########################################################
+    return completion.choices[0].message.content
 
 
-@app.route('/v1/prompt/itinerary', methods=['POST'])
-def chatPrompt():
-
-    print(request.get_data())
-
+# user's message to GPT after the initial request
+# request body must include 'user_message'
+# returns GPT's completion message string
+@app.route('/gpt', methods=['PATCH'])
+def user_gpt_chat():
     # get json body from POST request
     content = request.get_json()
-
     # check that the request body is valid
-    if ('messages' not in content):
+    if ('user_message' not in content):
         return (ERROR_MESSAGE_400, 400)
 
-    try:
-        p = prompt.Prompt()
-        completion = p.prompt(promptType.PromptType.ChatCompletions,
-                              content['messages'])
+    # extract variables from the request body content
+    new_message_object = {
+        "role": "user",
+        "content": [
+                {
+                    "type": "text",
+                    "text": content['user_message']
+                }
+            ]
+    }
 
-    except TypeError:
-        return {
-            "svc": "prompt-svc",
-            "msg": "Invalid type: please use 1) chat,\
-                2) embedded, or 3) image",
-            "messages": content['messages'],
-        }
+    # add user's message to the message log session variable
+    session['messages'].append(new_message_object)
 
-    # check that the request body is valid
-    if ('error' in completion):
-        return {
-            "svc": "prompt-svc",
-            "error": completion['error'],
-            "messages": content['messages'],
-        }
+    # call on GPT API with the message log
+    completion = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=session['messages'],
+        temperature=1,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
+    )
 
     # manually add GPT's reply message to message log
     new_message_object = {
@@ -217,20 +200,10 @@ def chatPrompt():
                 }
             ]
         }
-    content['messages'].append(new_message_object)
+    session['messages'].append(new_message_object)
 
-    return {
-        "svc": "prompt-svc",
-        "messages": content['messages'],
-    }
+    return completion.choices[0].message.content
 
 
-if __name__ == "__main__":
-    app.run(host=HOST, port=PORT, debug=True)
-
-# Resources used:
-#   - https://medium.com/@abed63/flask-application-with-openai-
-#     chatgpt-integration-tutorial-958588ac6bdf
-#   - https://medium.com/@jcrsch/openai-assistant-with-flask-
-#     a-simple-example-with-code-d007ac42ced2
-#
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=8080, debug=True)

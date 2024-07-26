@@ -4,27 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real-Time Recommendations with Sidebar - Travel Companion</title>
-    <link rel="stylesheet" href="../static/styles-real-time.css" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles-real-time.css') }}" type="text/css">
     </head>
 <body>
     <header>
         <nav>
             <div class="logo">
-                <img src="../static/images/logo_white.png" alt="Logo">
+                <img src="{{ url_for('static', filename='images/logo_white.png') }}" alt="Logo">
             </div>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="plan-a-trip.html">Plan a Trip</a></li>
-                <li><a href="recommendations.html">Live Advice</a></li>
+                <li><a href="{{ url_for('web.home') }}">Home</a></li>
+                <li><a href="{{ url_for('web.plan_a_trip') }}">Plan a Trip</a></li>
+                <li><a href="{{ url_for('web.recommendations') }}">Live Advice</a></li>
                 <li><a href="#history">History</a></li>
                 <li><a href="#support">Support</a></li>
             </ul>
-            <button class="log-in">Sign In</button>
+            <button class="log-in" onclick="location.href='login-method'">Sign In</button>
         </nav>
     </header>
     <main>
         <section class="adventure">
-            <img src="../static/images/night_sky.jpg" alt="Coastal City">
+            <img src="{{ url_for('static', filename='images/night_sky.jpg') }}" alt="Coastal City">
             <div class="container">
                 <aside class="calendar">
                     <h1>Itinerary</h1>
@@ -59,122 +59,122 @@
                         <div class="weather-scroll">
                             <div class="weather-hour">
                                 <p>12:00 AM</p>
-                                <img src="../static/images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
                                 <p>65°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>1:00 AM</p>
-                                <img src="../static/images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
                                 <p>64°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>2:00 AM</p>
-                                <img src="../static/images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
                                 <p>63°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>3:00 AM</p>
-                                <img src="../static/images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
                                 <p>62°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>4:00 AM</p>
-                                <img src="../static/images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
                                 <p>61°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>5:00 AM</p>
-                                <img src="../static/images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
                                 <p>60°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>6:00 AM</p>
-                                <img src="../static/images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
                                 <p>61°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>7:00 AM</p>
-                                <img src="../static/images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
                                 <p>63°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>8:00 AM</p>
-                                <img src="../static/images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
                                 <p>68°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>9:00 AM</p>
-                                <img src="../static/images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
                                 <p>72°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>10:00 AM</p>
-                                <img src="../static/images/cloud-sun-solid.svg" class="partly-cloudy-icon" alt="Partly Cloudy">
+                                <img src="{{ url_for('static', filename='images/cloud-sun-solid.svg') }}" class="partly-cloudy-icon" alt="Partly Cloudy">
                                 <p>77°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>11:00 AM</p>
-                                <img src="../static/images/cloud-showers-heavy-solid.svg" class="rain-icon" alt="Rainy">
+                                <img src="{{ url_for('static', filename='images/cloud-showers-heavy-solid.svg') }}" class="rain-icon" alt="Rainy">
                                 <p>80°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>12:00 PM</p>
-                                <img src="../static/images/cloud-bolt-solid.svg" class="storm-icon" alt="Stormy">
+                                <img src="{{ url_for('static', filename='images/cloud-bolt-solid.svg') }}" class="storm-icon" alt="Stormy">
                                 <p>82°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>1:00 PM</p>
-                                <img src="../static/images/cloud-showers-heavy-solid.svg" class="rain-icon" alt="Cloudy">
+                                <img src="{{ url_for('static', filename='images/cloud-showers-heavy-solid.svg') }}" class="rain-icon" alt="Cloudy">
                                 <p>79°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>2:00 PM</p>
-                                <img src="../static/images/cloud-solid.svg" class="cloudy-icon" alt="Cloudy">
+                                <img src="{{ url_for('static', filename='images/cloud-solid.svg') }}" class="cloudy-icon" alt="Cloudy">
                                 <p>78°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>3:00 PM</p>
-                                <img src="../static/images/cloud-sun-solid.svg" class="partly-cloudy-icon" alt="Partly Cloudy">
+                                <img src="{{ url_for('static', filename='images/cloud-sun-solid.svg') }}" class="partly-cloudy-icon" alt="Partly Cloudy">
                                 <p>80°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>4:00 PM</p>
-                                <img src="../static/images/cloud-sun-solid.svg" class="partly-cloudy-icon" alt="Partly Cloudy">
+                                <img src="{{ url_for('static', filename='images/cloud-sun-solid.svg') }}" class="partly-cloudy-icon" alt="Partly Cloudy">
                                 <p>81°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>5:00 PM</p>
-                                <img src="../static/images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
                                 <p>79°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>6:00 PM</p>
-                                <img src="../static/images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
                                 <p>78°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>7:00 PM</p>
-                                <img src="../static/images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
                                 <p>76°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>8:00 PM</p>
-                                <img src="../static/images/sun-solid.svg" class="sunny-icon" alt="Sunny">
+                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
                                 <p>73°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>9:00 PM</p>
-                                <img src="../static/images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
                                 <p>70°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>10:00 PM</p>
-                                <img src="../static/images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
                                 <p>68°F</p>
                             </div>
                             <div class="weather-hour">
                                 <p>11:00 PM</p>
-                                <img src="../static/images/moon-solid.svg" class="moon-icon" alt="Moon Night">
+                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
                                 <p>66°F</p>
                             </div>
                         </div>
