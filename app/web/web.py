@@ -66,16 +66,19 @@ def login_method():
 #   - gpt_message:  string
 #
 ###########################################################
+
+
 def promptServiceInitialReq(content):
-    r = requests.post('http://' + PROMPT_SVC_HOST + ':' + PROMPT_SVC_PORT + '/v1/prompt/initial-req',
-                         json=content)
+    r = requests.post('http://' + PROMPT_SVC_HOST + ':' + PROMPT_SVC_PORT +
+                      '/v1/prompt/initial-req', json=content)
     response = r.json()
     gpt_message = response['gpt-message']
     return gpt_message
-    
+
+
 def promptServiceChat(messages):
-    return requests.post('http://' + PROMPT_SVC_HOST + ':' + PROMPT_SVC_PORT + '/v1/prompt/itinerary',
-                         json={"messages": messages})
+    return requests.post('http://' + PROMPT_SVC_HOST + ':' + PROMPT_SVC_PORT +
+                         '/v1/prompt/itinerary',json={"messages": messages})
 
 # Resource(s) Used:
 # https://flask.palletsprojects.com/en/3.0.x/blueprints/

@@ -47,6 +47,8 @@ session_messages = []
 #  Endpoint to check if prompt-svc is running
 #
 ###########################################################
+
+
 @app.route('/')
 def index():
     return {
@@ -68,6 +70,8 @@ def index():
 #   - answer:   answer to the question prompted
 #
 ###########################################################
+
+
 @app.route('/v1/prompt/initial-req', methods=['POST'])
 def initialRequest():
 
@@ -168,6 +172,8 @@ def initialRequest():
 #   - answer:   answer to the question prompted
 #
 ###########################################################
+
+
 @app.route('/v1/prompt/itinerary', methods=['POST'])
 def chatPrompt():
 
