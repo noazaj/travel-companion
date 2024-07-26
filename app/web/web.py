@@ -1,8 +1,6 @@
 from flask import Blueprint, render_template, abort, request
 from jinja2 import TemplateNotFound
-from inspect import cleandoc as clean
 import requests
-import json
 import os
 
 web_bp = Blueprint('web', __name__,
@@ -13,6 +11,7 @@ ERROR_MESSAGE_400 = {"Error": "The request body is invalid"}
 
 PROMPT_SVC_HOST = os.getenv('PROMPT_SVC_HOST')
 PROMPT_SVC_PORT = os.getenv('PROMPT_SVC_PORT')
+
 
 @web_bp.route('/', methods=['GET'])
 def home():
@@ -55,6 +54,7 @@ def login_method():
     except TemplateNotFound:
         abort(404)
 
+
 ###########################################################
 #
 #  Route to use promt-svc's initial GPT request route
@@ -66,11 +66,10 @@ def login_method():
 #   - gpt_message:  string
 #
 ###########################################################
-
-
 def promptServiceInitialReq(content):
     r = requests.post('http://' + PROMPT_SVC_HOST + ':' + PROMPT_SVC_PORT +
-                      '/v1/prompt/initial-req', json=content)
+                      '/v1/prompt/initial-trip-planning-req',
+                      json=content)
     response = r.json()
     gpt_message = response['gpt-message']
     return gpt_message
@@ -78,7 +77,7 @@ def promptServiceInitialReq(content):
 
 def promptServiceChat(messages):
     return requests.post('http://' + PROMPT_SVC_HOST + ':' + PROMPT_SVC_PORT +
-                         '/v1/prompt/itinerary',json={"messages": messages})
+                         '/v1/prompt/itinerary', json={"messages": messages})
 
 # Resource(s) Used:
 # https://flask.palletsprojects.com/en/3.0.x/blueprints/
