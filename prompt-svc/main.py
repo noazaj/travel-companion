@@ -8,7 +8,7 @@ from dotenv import load_dotenv, find_dotenv
 import os
 # from flask import jsonify, send_file
 # import requests
-# import json
+import json
 # import io
 
 # from pytest import Session
@@ -72,12 +72,12 @@ def index():
 ###########################################################
 
 
-@app.route('/v1/prompt/initial-req', methods=['POST'])
+@app.route('/v1/prompt/initial-trip-planning-req', methods=['POST'])
 def initialRequest():
 
     content = request.get_json()
 
-    print(content)
+    # print(content)
     # check that the request body is valid
     if ('destination' not in content or 'num-users' not in content or
             'num-days' not in content or 'preferences' not in content):
@@ -87,59 +87,36 @@ def initialRequest():
     destination = content['destination']
     travelers_num = content['num-users']
     days_num = content['num-days']
-    travel_preference = content['preferences']
+    travel_preferences = content['preferences']
 
     # create a session variable that stores all message logs
     # the message log is an array of 'message' objects
     # a 'message' objects is a dictionary of "role" and "content"
-    session['messages'] = [
-        {
-            "role": "system",
-            "content": [
-                {
-                    "type": "text",
-                    "text": (
-                        "You are a professional vacation planner helping "
-                        "users plan trips abroad. You will recommend hotels, "
-                        "attractions, restaurants, shopping area, natural "
-                        "sites or any other places that the user requests. "
-                        "You will plan according to the budget and vacation "
-                        "length given by the user. You will present the "
-                        "result in a format of detailed itinerary of each "
-                        "day, begin from day 1 to the last day."
-                    )
-                }
-            ]
-        },
-        {
-            "role": "user",
-            "content": [
-                {
-                    "type": "text",
-                    "text": (
-                        f"Plan me a {days_num} days trip to {destination}. "
-                        f"This is for a party of {travelers_num} adults aging "
-                        f"from 35-38. We are interested in visiting shopping "
-                        f"area, enjoying local food, with a one or two night "
-                        f"life. We will strictly stay in Tokyo. Budget should "
-                        f"be $1500 per person without airfare, but include "
-                        f"ehotels, meals and other xpenses. We will be "
-                        f"leaving from New York, USA. {travel_preference}"
-                    )
-                }
-            ]
-        }
-    ]
+    completion = None
+    session['messages'] = None
+    try:
+        p = prompt.Prompt()
+        session['messages'] = p.initialPlanATrip(destination, travelers_num,
+                                                 days_num, travel_preferences)
+        completion = p.prompt(promptType.PromptType.ChatCompletions,
+                              session['messages'])
+        print(completion)
 
-    # call on GPT API with the message log
-    completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=session['messages'],
-        temperature=1,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0
-    )
+    except TypeError:
+        return {
+            "svc": "prompt-svc",
+            "msg": "Invalid type: please use 1) chat,\
+                2) embedded, or 3) image",
+            "messages": session['messages'],
+        }
+
+    # check that the request body is valid
+    if ('error' in completion):
+        return {
+            "svc": "prompt-svc",
+            "error": completion['error'],
+            "messages": session['messages'],
+        }
 
     # manually add GPT's reply message to message log
     new_message_object = {
@@ -154,7 +131,7 @@ def initialRequest():
 
     session['messages'].append(new_message_object)
 
-    print(completion.choices[0].message.content)
+    print(completion)
 
     return ({"gpt-message": completion.choices[0].message.content}, 200)
 
@@ -214,6 +191,59 @@ def chatPrompt():
                 {
                     "type": "text",
                     "text": completion.choices[0].message.content
+                }
+            ]
+        }
+    content['messages'].append(new_message_object)
+
+    return {
+        "svc": "prompt-svc",
+        "messages": content['messages'],
+    }
+
+
+@app.route('/v1/prompt/weather', methods=['POST'])
+def weatherPrompt():
+    # get json body from POST request
+    content = request.get_json()
+
+    # check that the request body is valid
+    if ('location' not in content):
+        return (ERROR_MESSAGE_400, 400)
+
+    content['messages'] = None
+
+    try:
+        p = prompt.Prompt()
+        content['messages'] = p.getHourlyForcast(content['location'], 24)
+        completion = p.prompt(promptType.PromptType.ChatCompletions,
+                              content['messages'])
+
+    except TypeError:
+        return {
+            "svc": "prompt-svc",
+            "msg": "Invalid type: please use 1) chat,\
+                2) embedded, or 3) image",
+            "messages": content['messages'],
+        }
+
+    # check that the request body is valid
+    if ('error' in completion):
+        return {
+            "svc": "prompt-svc",
+            "error": completion['error'],
+            "messages": content['messages'],
+        }
+
+    print(json.loads(completion.choices[0].message.content))
+
+    # manually add GPT's reply message to message log
+    new_message_object = {
+            "role": completion.choices[0].message.role,
+            "content": [
+                {
+                    "type": "text",
+                    "json": json.loads(completion.choices[0].message.content)
                 }
             ]
         }

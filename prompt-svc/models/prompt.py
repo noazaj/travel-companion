@@ -4,14 +4,24 @@
 from .promptType import PromptType
 from .client import Client
 
-PROMPT_ITINERARY = "You are a professional vacation planner helping users \
-                    plan trips abroad. You will recommend hotels, \
-                    attractions, restaurants, shopping area, natural sites \
-                    or any other places that the user requests. You will \
-                    plan according to the budget and vacation length given \
-                    by the user. You will present the result in a format of \
-                    detailed itinerary of each day, begin from day 1 to the \
-                    last day."
+# The initial prompt context message for chatGPT to know how to answer
+PROMPT_ITINERARY = """You are a professional vacation planner helping users
+                    plan trips abroad. You will recommend hotels,
+                    attractions, restaurants, shopping area, natural sites
+                    or any other places that the user requests. You will
+                    plan according to the budget and vacation length given
+                    by the user. You will present the result in a format of
+                    detailed itinerary of each day, begin from day 1 to the
+                    last day."""
+
+PROMPT_WEATHER = """You are a weather service."""
+
+WEATHER_JSON = {
+    "time": "string",
+    "temperature": "number",
+    "condition": "string",
+    "chance_of_rain": "number"
+}
 
 
 # Prompt class used to make chat GPT prompts
@@ -88,3 +98,81 @@ class Prompt():
         )
 
         return completion.to_json()
+
+    # Helper method for intial trip planning message construction
+    def initialPlanATrip(self, destination, travelers_num, days_num,
+                         travel_preferences):
+        messages = [
+            {
+                "role": "system",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": cleanString(PROMPT_ITINERARY)
+                    }
+                ]
+            },
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": self.planATripMessage(destination,
+                                                      travelers_num,
+                                                      days_num,
+                                                      travel_preferences)
+                    }
+                ]
+            }
+        ]
+
+        return messages
+
+    # Constructs the initial plan a trip message
+    def planATripMessage(self, destination, travelers_num, days_num,
+                         travel_preferences):
+        message = f"""Plan me a {days_num} days trip to {destination}.
+                This is for a party of {travelers_num} adults aging
+                from 35-38. We are interested in visiting shopping
+                area, enjoying local food, with a one or two night
+                life. We will strictly stay in Tokyo. Budget should
+                be $1500 per person without airfare, but include
+                ehotels, meals and other xpenses. We will be
+                leaving from New York, USA. {travel_preferences}"""
+
+        return cleanString(message)  # removes whitespace from indendation
+
+    # Gets hourly forcast for the next day at the given location
+    def getHourlyForcast(self, location, periods=24):
+
+        forcastMessage = f"""give me an hourly forcast for weather in
+                      {location} for the next {periods} hours in
+                      json format with this schema: {WEATHER_JSON}"""
+
+        messages = [
+            {
+                "role": "system",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": cleanString(PROMPT_WEATHER)
+                    }
+                ]
+            },
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": cleanString(forcastMessage)
+                    }
+                ]
+            }
+        ]
+
+        return messages
+
+
+# Cleans a string of indentation spaces
+def cleanString(string):
+    return ' '.join(string.split())
