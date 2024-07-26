@@ -25,7 +25,7 @@
     </header>
     <main>
         <section class="adventure">
-            <img src="{{ url_for('static', filename='images/ocean_boats.jpg') }}" alt="Mountain">
+            <img src="{{ url_for('static', filename='images/ocean_boats.jpg') }}" alt="Ocean and Boats">
             <div class="plan-your-trip-container">
                 <div class="plan-your-trip-text">
                     <h1>Plan Your Trip</h1>
@@ -39,6 +39,9 @@
                         <label for="num-days">Number of Days:</label>
                         <input type="number" id="num-days" name="num-days" min="1" required>
                         
+                        <label for="budget">Total Budget:</label>
+                        <input type="number" id="budget" name="budget" min="1" required>
+                        
                         <label for="preferences">Travel Preferences:</label>
                         <textarea id="preferences" name="preferences" rows="4" placeholder="Describe your travel preferences..."></textarea>
                         
@@ -47,9 +50,14 @@
                 </div>
                 <div class="plan-your-trip-output">
                     <h1>Your Tailored Itinerary</h1>
-                    <!-- Placeholder for recommended trip plan -->
-                    <div class="plan-your-trip-recommendation-container">
-                        {{gpt_response}}
+                    <div class="chat-container">
+                        <div class="chat-box" id="chat-box">
+                            <!-- Chat messages will be appended here -->
+                        </div>
+                        <form id="chat-form" class="chat-form" >
+                            <input type="text" id="user-input" name="user-input" placeholder="Type your message..." required>
+                            <button type="submit" class="chat-submit-btn">Send</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -58,5 +66,6 @@
     <footer>
         <p>Copyright © Travel Companion 2024. All Rights Reserved.</p>
     </footer>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
