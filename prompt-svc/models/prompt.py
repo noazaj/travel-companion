@@ -102,35 +102,17 @@ class Prompt():
     # Helper method for intial trip planning message construction
     def initialPlanATrip(self, destination, travelers_num, days_num,
                          travel_preferences):
-        messages = [
-            {
-                "role": "system",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": cleanString(PROMPT_ITINERARY)
-                    }
-                ]
-            },
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": self.planATripMessage(destination,
-                                                      travelers_num,
-                                                      days_num,
-                                                      travel_preferences)
-                    }
-                ]
-            }
-        ]
 
-        return messages
+        userText = self.planATripMessage(destination, travelers_num,
+                                         days_num, travel_preferences)
+
+        return self.messageConstructor(cleanString(PROMPT_ITINERARY),
+                                       userText)
 
     # Constructs the initial plan a trip message
     def planATripMessage(self, destination, travelers_num, days_num,
                          travel_preferences):
+
         message = f"""Plan me a {days_num} days trip to {destination}.
                 This is for a party of {travelers_num} adults aging
                 from 35-38. We are interested in visiting shopping
@@ -149,13 +131,19 @@ class Prompt():
                       {location} for the next {periods} hours in
                       json format with this schema: {WEATHER_JSON}"""
 
+        return self.messageConstructor(cleanString(PROMPT_WEATHER),
+                                       cleanString(forcastMessage))
+
+    # Helper method to construct messages
+    def messageConstructor(self, systemText, userText):
+
         messages = [
             {
                 "role": "system",
                 "content": [
                     {
                         "type": "text",
-                        "text": cleanString(PROMPT_WEATHER)
+                        "text": systemText
                     }
                 ]
             },
@@ -164,7 +152,7 @@ class Prompt():
                 "content": [
                     {
                         "type": "text",
-                        "text": cleanString(forcastMessage)
+                        "text": userText
                     }
                 ]
             }

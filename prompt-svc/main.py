@@ -171,7 +171,7 @@ def chatPrompt():
     except TypeError:
         return {
             "svc": "prompt-svc",
-            "msg": "Invalid type: please use 1) chat,\
+            "error": "Invalid type: please use 1) chat,\
                 2) embedded, or 3) image",
             "messages": content['messages'],
         }
