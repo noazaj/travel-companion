@@ -20,9 +20,21 @@
                 <li><a href="#support">Support</a></li>
                 <li><a href="#advice">Live Advice</a></li>
             </ul>
-            <button class="log-in" onclick="location.href='login-method'">Sign In</button>
+            <button class="log-in" onclick="openLoginModal()">Sign In</button>
         </nav>
     </header>
+
+    <!-- Sign In Modal -->
+    <div id="signinModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Sign In</h2>
+            <button class="sign-in-btn github-btn" onclick="location.href='login/github'">Sign in with GitHub</button>
+            <button class="sign-in-btn google-btn" onclick="location.href='login/google'">Sign in with Google</button>
+            <button class="sign-in-btn facebook-btn" onclick="location.href='login/facebook'">Sign in with Facebook</button>
+        </div>
+    </div>
+
     <main>
         <section class="adventure">
             <img src="{{ url_for('static', filename='images/ocean_boats.jpg') }}" alt="Mountain">
@@ -58,5 +70,21 @@
     <footer>
         <p>Copyright © Travel Companion 2024. All Rights Reserved.</p>
     </footer>
+    <script>
+        function openLoginModal() {
+            document.getElementById('signinModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('signinModal').style.display = "none";
+        }
+
+        // Close the modal if the user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('signinModal')) {
+                document.getElementById('signinModal').style.display = "none";
+        }
+    }
+    </script>
 </body>
 </html>
