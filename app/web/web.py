@@ -1,8 +1,6 @@
 from flask import Blueprint, render_template, abort, request
 from jinja2 import TemplateNotFound
-from inspect import cleandoc as clean
 import requests
-import json
 import os
 
 web_bp = Blueprint('web', __name__,
@@ -13,6 +11,7 @@ ERROR_MESSAGE_400 = {"Error": "The request body is invalid"}
 
 PROMPT_SVC_HOST = os.getenv('PROMPT_SVC_HOST')
 PROMPT_SVC_PORT = os.getenv('PROMPT_SVC_PORT')
+
 
 @web_bp.route('/', methods=['GET'])
 def home():
@@ -78,7 +77,7 @@ def promptServiceInitialReq(content):
 
 def promptServiceChat(messages):
     return requests.post('http://' + PROMPT_SVC_HOST + ':' + PROMPT_SVC_PORT +
-                         '/v1/prompt/itinerary',json={"messages": messages})
+                         '/v1/prompt/itinerary', json={"messages": messages})
 
 # Resource(s) Used:
 # https://flask.palletsprojects.com/en/3.0.x/blueprints/
