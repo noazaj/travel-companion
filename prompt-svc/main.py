@@ -17,7 +17,7 @@ from models import promptType, prompt
 # Load ENV variables
 load_dotenv(find_dotenv(".env"))
 
-OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Set up Flask app
