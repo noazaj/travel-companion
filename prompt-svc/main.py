@@ -4,7 +4,7 @@
 from flask import Flask, request, session
 from flask_session import Session
 from openai import OpenAI
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 import os
 # from flask import jsonify, send_file
 # import requests
@@ -15,9 +15,9 @@ import json
 from models import promptType, prompt
 
 # Load ENV variables
-load_dotenv(find_dotenv(".env"))
+load_dotenv()
 
-OPENAI_API_KEY = os.environ['OPENAI_API_KEY']
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Set up Flask app
