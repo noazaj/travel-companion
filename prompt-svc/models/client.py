@@ -10,7 +10,7 @@ class Client():
 
     def __init__(self) -> None:
         self.client = OpenAI(
-            api_key=os.getenv('API_KEY'),
+            api_key=os.getenv('OPENAI_API_KEY'),
             organization=None,
             project=None,
             base_url=None,

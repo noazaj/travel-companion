@@ -13,7 +13,7 @@ import os
 app = Flask(__name__)
 
 # Load configurations from config.py file
-app.config.from_object('config.DevelopmentConfig')
+app.config.from_object('app.web.config.DevelopmentConfig')
 
 # Configer Flask session variables
 app.config['SESSION_TYPE'] = 'filesystem'

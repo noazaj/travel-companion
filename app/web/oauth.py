@@ -109,9 +109,7 @@ def oauth2_authorize(provider):
 ########################################
 @oauth_bp.route('/profile')
 def profile():
-    print(session.items())
     profile = session.get('profile')
-    print(profile)
     if not profile:
         return redirect(url_for('oauth.oauth2_login'))
 
