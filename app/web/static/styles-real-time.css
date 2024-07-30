@@ -127,17 +127,19 @@ footer {
     color: #fff;
     background-color: rgba(255, 255, 255, 0.284);
     padding: 1rem;
+    overflow-y: auto;
+    max-height: 42rem;
 }
 
 .accordion-item {
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
 .accordion-header {
     background-color: none;
     color: #fff;
     cursor: pointer;
-    padding: 10px;
+    padding: 0px;
     font-size: 1.2rem;
     border: none;
     text-align: left;
@@ -152,7 +154,7 @@ footer {
 .accordion-content {
     display: none;
     background-color: none;
-    padding: 10px;
+    padding: 0px;
 }
 
 .accordion-content ul {
@@ -161,7 +163,7 @@ footer {
 }
 
 .accordion-content ul li {
-    padding: 5px 0;
+    padding: 3px 0;
     cursor: pointer;
     color: #fff;
 }
@@ -229,6 +231,15 @@ footer {
 .moon-icon {
     filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(309deg) brightness(107%) contrast(104%);
 }
+
+.cloudy-night-icon {
+    filter: brightness(0) saturate(100%) invert(78%) sepia(41%) saturate(195%) hue-rotate(159deg) brightness(96%) contrast(82%);
+}
+
+.rainy-night-icon {
+    filter: brightness(0) saturate(100%) invert(56%) sepia(30%) saturate(5815%) hue-rotate(210deg) brightness(96%) contrast(96%);
+}
+
 
 .recommendations-list {
     position: absolute;

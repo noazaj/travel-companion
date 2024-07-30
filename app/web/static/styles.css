@@ -114,7 +114,6 @@ footer {
 }
 
 /* Plan a trip css  */
-
 .plan-your-trip-container {
     display: flex;
     justify-content: center;
@@ -124,7 +123,7 @@ footer {
 
 .plan-your-trip-text {
     position: absolute;
-    top: 26rem;
+    top: 27rem;
     left: 30rem;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -146,8 +145,8 @@ footer {
 .plan-your-trip-form input, .trip-form textarea {
     font-weight: bold;
     color: #fff;
-    background-color: rgba(255, 255, 255,0.5);
-    padding: 1.25rem;
+    background: rgba(156, 156, 156, 0.5);
+    padding: 0.75rem;
     width: calc(100% - 1rem); /* Adjust for padding */
     /* padding: 10px; */
     border: 1px solid #ccc;
@@ -164,10 +163,10 @@ footer {
 .plan-your-trip-form textarea {
     font-weight: bold;
     color: #fff;
-    background: rgba(255, 255, 255,0.5);
-    padding: 1.25rem;
+    background: rgba(156, 156, 156, 0.5);
+    padding: 1rem;
     resize: vertical;
-    height: 100px;
+    height: 50px;
     width: calc(100% - 1rem); 
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -199,22 +198,69 @@ footer {
     left: 80rem;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: #fff;
     width: 42rem;
 }
 
 .plan-your-trip-output h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
+    color: #fff;
 }
 
 
 .plan-your-trip-recommendation-container {
-    background-color: rgba(255, 255, 255,0.5);
+    background: rgba(156, 156, 156, 0.5);
+    color: #fff;
+    font-size: 1.2rem;
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     min-height: 32rem; /* Placeholder height */
+    overflow-y: auto;
+    max-height: 32rem;
+}
+
+.accordion-item {
+    margin-bottom: 0px;
+}
+
+.accordion-header {
+    background-color: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 0px;
+    font-size: 1.5rem;
+    border: none;
+    text-align: left;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+.accordion-header:hover {
+    background-color: #ffffff6b;
+}
+
+.accordion-content {
+    display: none;
+    background-color: none;
+    padding: 0px;
+    color: #fff;
+}
+
+.accordion-content ul {
+    list-style: none;
+    padding: 0;
+    color: #fff;
+}
+
+.accordion-content ul li {
+    padding: 0px 0;
+    cursor: pointer;
+    color: #fff;
+}
+
+.accordion-content ul li:hover {
+    background-color: #ffffff6b;
 }
 
 
@@ -353,6 +399,41 @@ footer {
     color: white;
 }
 
+/* Notification banner */
+
+.notification-banner {
+    background-color: #f44336;
+    color: white;
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1001;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-banner p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2rem;
+}
+
+.notification-banner .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.notification-banner .notification-link {
+    color: white;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-left: 10px;
+}
 
 
 /* 
