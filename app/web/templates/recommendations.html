@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles-real-time.css') }}" type="text/css">
     </head>
 <body>
+    <!-- Notification Banner -->
+    <div id="notification-banner" class="notification-banner" style="display: none;">
+        <p id="notification-message"></p>
+        <button class="close-btn" onclick="closeNotification()">×</button>
+        <a id="notification-link" href="#" class="notification-link">View Recommendations</a>
+    </div>
+
     <header>
         <nav>
             <div class="logo">
@@ -40,155 +47,86 @@
             <div class="container">
                 <aside class="calendar">
                     <h1>Itinerary</h1>
-                    <div class="accordion">
-                        <div class="accordion-item">
-                            <h1 class="accordion-header" onclick="toggleAccordion('day1')">Day 1 / May 1st</h1>
-                            <div class="accordion-content" id="day1">
-                                <ul>
-                                    <li onclick="updateRecommendations('Event 1')">Event 1 - 10:00 AM</li>
-                                    <li onclick="updateRecommendations('Event 2')">Event 2 - 12:00 PM</li>
-                                    <li onclick="updateRecommendations('Event 3')">Event 3 - 3:00 PM</li>
-                                    <li onclick="updateRecommendations('Event 4')">Event 4 - 6:00 PM</li>
-                                </ul>
+                    <div class="accordion" id="itinerary-accordion">
+                        {% if itinerary_data %}
+                            {% for day, events in itinerary_data.items() %}
+                            <div class="accordion-item">
+                                <h1 class="accordion-header" onclick='toggleAccordion("{{ day }}")'>{{ day }}</h1>
+                                <div class="accordion-content" id="{{ day }}">
+                                    <ul>
+                                        {% for event in events %}
+                                        <li onclick="updateRecommendations('{{ event.time }} - {{ event.activity }}', this.dataset.details)" data-details='{{ event | tojson | safe }}'>
+                                            {{ event.time }} - {{ event.activity }}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h1 class="accordion-header" onclick="toggleAccordion('day2')">Day 2 / May 2nd</h1>
-                            <div class="accordion-content" id="day2">
-                                <ul>
-                                    <li onclick="updateRecommendations('Event 1')">Event 1 - 9:00 AM</li>
-                                    <li onclick="updateRecommendations('Event 2')">Event 2 - 11:00 AM</li>
-                                    <li onclick="updateRecommendations('Event 3')">Event 3 - 2:00 PM</li>
-                                    <li onclick="updateRecommendations('Event 4')">Event 4 - 5:00 PM</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>No events planned for this itinerary.</p>
+                        {% endif %}
+                    </div>    
                 </aside>
                 <section class="recommendations">
                     <div class="weather">
                         <h1>Weather Report</h1>
                         <div class="weather-scroll">
-                            <div class="weather-hour">
-                                <p>12:00 AM</p>
-                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
-                                <p>65°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>1:00 AM</p>
-                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
-                                <p>64°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>2:00 AM</p>
-                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
-                                <p>63°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>3:00 AM</p>
-                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
-                                <p>62°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>4:00 AM</p>
-                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
-                                <p>61°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>5:00 AM</p>
-                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
-                                <p>60°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>6:00 AM</p>
-                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
-                                <p>61°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>7:00 AM</p>
-                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
-                                <p>63°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>8:00 AM</p>
-                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
-                                <p>68°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>9:00 AM</p>
-                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
-                                <p>72°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>10:00 AM</p>
-                                <img src="{{ url_for('static', filename='images/cloud-sun-solid.svg') }}" class="partly-cloudy-icon" alt="Partly Cloudy">
-                                <p>77°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>11:00 AM</p>
-                                <img src="{{ url_for('static', filename='images/cloud-showers-heavy-solid.svg') }}" class="rain-icon" alt="Rainy">
-                                <p>80°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>12:00 PM</p>
-                                <img src="{{ url_for('static', filename='images/cloud-bolt-solid.svg') }}" class="storm-icon" alt="Stormy">
-                                <p>82°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>1:00 PM</p>
-                                <img src="{{ url_for('static', filename='images/cloud-showers-heavy-solid.svg') }}" class="rain-icon" alt="Cloudy">
-                                <p>79°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>2:00 PM</p>
-                                <img src="{{ url_for('static', filename='images/cloud-solid.svg') }}" class="cloudy-icon" alt="Cloudy">
-                                <p>78°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>3:00 PM</p>
-                                <img src="{{ url_for('static', filename='images/cloud-sun-solid.svg') }}" class="partly-cloudy-icon" alt="Partly Cloudy">
-                                <p>80°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>4:00 PM</p>
-                                <img src="{{ url_for('static', filename='images/cloud-sun-solid.svg') }}" class="partly-cloudy-icon" alt="Partly Cloudy">
-                                <p>81°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>5:00 PM</p>
-                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
-                                <p>79°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>6:00 PM</p>
-                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
-                                <p>78°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>7:00 PM</p>
-                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
-                                <p>76°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>8:00 PM</p>
-                                <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
-                                <p>73°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>9:00 PM</p>
-                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
-                                <p>70°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>10:00 PM</p>
-                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
-                                <p>68°F</p>
-                            </div>
-                            <div class="weather-hour">
-                                <p>11:00 PM</p>
-                                <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Moon Night">
-                                <p>66°F</p>
-                            </div>
+                            {% if weather_data %}
+                                {% for hour in weather_data.forecast %}
+                                <div class="weather-hour">
+                                    <p>{{ hour.time }}</p>
+                                    {% if hour.condition == "Clear Night" %}
+                                    <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Clear Night">
+                                    {% elif hour.condition == "Rainy Night" %}
+                                    <img src="{{ url_for('static', filename='images/cloud-moon-rain-solid.svg') }}" class="rainy-night-icon" alt="Rainy Night">
+                                    {% elif hour.condition == "Cloudy Night" %}
+                                    <img src="{{ url_for('static', filename='images/cloud-moon-solid.svg') }}" class="cloudy-night-icon" alt="Cloudy Night">
+                                    {% elif hour.condition == "Sunny" %}
+                                    <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
+                                    {% elif hour.condition == "Partly Cloudy" %}
+                                    <img src="{{ url_for('static', filename='images/cloud-sun-solid.svg') }}" class="partly-cloudy-icon" alt="Partly Cloudy">
+                                    {% elif hour.condition == "Rainy" %}
+                                    <img src="{{ url_for('static', filename='images/cloud-showers-heavy-solid.svg') }}" class="rain-icon" alt="Rainy">
+                                    {% elif hour.condition == "Stormy" %}
+                                    <img src="{{ url_for('static', filename='images/cloud-bolt-solid.svg') }}" class="storm-icon" alt="Stormy">
+                                    {% elif hour.condition == "Cloudy" %}
+                                    <img src="{{ url_for('static', filename='images/cloud-solid.svg') }}" class="cloudy-icon" alt="Cloudy">
+                                    {% elif hour.condition == "Snowy" %}
+                                    <img src="{{ url_for('static', filename='images/snowflake-solid.svg') }}" class="cloudy-icon" alt="Snowy">
+
+                                    
+                                    {% elif "Rain" in hour.condition and "Night" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/cloud-moon-rain-solid.svg') }}" class="rainy-night-icon" alt="Rainy Night">
+                                    {% elif "Cloud" in hour.condition and "Night" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/cloud-moon-solid.svg') }}" class="cloudy-night-icon" alt="Cloudy Night">
+                                    {% elif "Night" in hour.condition %}
+                                    <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Clear Night">
+                                    {% elif "Cloudy" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/cloud-sun-solid.svg') }}" class="partly-cloudy-icon" alt="Partly Cloudy">
+                                    {% elif "Rain" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/cloud-showers-heavy-solid.svg') }}" class="rain-icon" alt="Rainy">
+                                    {% elif "Storm" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/cloud-bolt-solid.svg') }}" class="storm-icon" alt="Stormy">
+                                    {% elif "Cloud" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/cloud-solid.svg') }}" class="cloudy-icon" alt="Cloudy">
+                                    {% elif "Snow" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/snowflake-solid.svg') }}" class="cloudy-icon" alt="Snowy">
+                                    {% elif "Sun" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
+                                    {% endif %}
+                                    <p>{{ hour.temperature }}
+                                        {% if "C" in hour.FahrenheitorCelsius %}
+                                            °C
+                                        {% elif "F" in hour.FahrenheitorCelsius %}
+                                            °F
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <p>No weather pulled for this itinerary.</p>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="recommendations-list">
@@ -204,7 +142,20 @@
     <footer>
         <p>Copyright © Travel Companion 2024. All Rights Reserved.</p>
     </footer>
+    <script id="itinerary-data" type="application/json">
+        {{ itinerary_data | tojson | safe }}
+    </script>
+    <script id="weather-data" type="application/json">
+        {{ weather_data | tojson | safe }}
+    </script>
+
     <script>
+        // Retrieve the itinerary data from the script tag
+        const itineraryData = JSON.parse(document.getElementById('itinerary-data').textContent);
+        const weatherData = JSON.parse(document.getElementById('weather-data').textContent);
+        let notificationMessagesText = "";
+
+
         function toggleAccordion(id) {
             var content = document.getElementById(id);
             if (content.style.display === "block") {
@@ -214,9 +165,22 @@
             }
         }
 
-        function updateRecommendations(event) {
+        function decodeHtmlEntities(str) {
+            var txt = document.createElement('textarea');
+            txt.innerHTML = str;
+            return txt.value;
+        }
+
+        function updateRecommendations(event, details) {
+            details = JSON.parse(details.replace(/&quot;/g,'"'));
             const recommendationContent = document.getElementById('recommendation-content');
-            recommendationContent.innerHTML = `<p>Recommendations for ${event}</p>`;
+            recommendationContent.innerHTML = `
+                <h2>${decodeHtmlEntities(event)}</h2>
+                <p><strong>Location:</strong> ${decodeHtmlEntities(details.location)}</p>
+                <p><strong>Activity:</strong> ${decodeHtmlEntities(details.activity)}</p>
+                <p><strong>Average Duration:</strong> ${details["average duration"]} hours</p>
+                <p><strong>Cost:</strong> $${details.cost}</p>
+            `;
         }
 
         function openLoginModal() {
@@ -231,8 +195,49 @@
         window.onclick = function(event) {
             if (event.target == document.getElementById('signinModal')) {
                 document.getElementById('signinModal').style.display = "none";
+            }
         }
-    }
+
+        function closeNotification() {
+            document.getElementById('notification-banner').style.display = 'none';
+        }
+
+        function showNotification() {
+            const notificationBanner = document.getElementById('notification-banner');
+            const notificationMessages = document.getElementById('notification-message');
+
+            if (notificationMessages) {
+                const notificationMessage = document.createElement('p');
+                notificationMessage.innerText = notificationMessagesText;
+                notificationMessages.appendChild(notificationMessage);
+                notificationBanner.style.display = 'block';
+            } else {
+                console.error('Notification messages container not found');
+            }
+        }
+
+        function checkWeatherForDay1() {
+            const day1Events = itineraryData["Day 1"];
+            const weatherConditions = ["Rainy Night", "Rainy", "Stormy", "Snowy"];
+
+            day1Events.forEach(event => {
+                const eventTime = event.time;
+                const eventActivity = event.activity;
+
+                weatherData.forecast.forEach(hour => {
+                    if (weatherConditions.includes(hour.condition) && hour.time === eventTime) {
+                        console.log("Showing hour notification with message:", hour);
+                        notificationMessagesText += `Warning of incoming ${hour.condition} during ${hour.time} over ${eventActivity} planned.\n`;
+                    }
+                });
+            });
+
+            // Show all accumulated notifications
+            showNotification();
+        }
+
+        // Call checkWeatherForDay1 to show notifications based on weather conditions for Day 1 events
+        checkWeatherForDay1();
     </script>
 </body>
 </html>
