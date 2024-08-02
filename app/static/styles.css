@@ -41,7 +41,7 @@ nav ul li a {
     font-size: 1.5rem;
 }
 
-.log-in {
+.log-in, .log-out {
     background: #333;
     color: #fff;
     border: none;
