@@ -8,6 +8,7 @@ load_dotenv()
 
 notification_update = {}
 
+
 def start_notification_thread():
     notification_thread = threading.Thread(target=fetch_weather_update)
     notification_thread.start()
