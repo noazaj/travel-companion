@@ -20,7 +20,13 @@
                 <li><a href="#support">Support</a></li>
                 <li><a href="#advice">Live Advice</a></li>
             </ul>
-            <button class="log-in" onclick="openLoginModal()">Sign In</button>
+            {% if 'profile' in session %}
+                <div class="user-info">
+                    <button class="log-out" onclick="logout()"><span>{{ session['profile']['name'] }}</span></button>
+                </div>
+            {% else %}
+                <button class="log-in" onclick="openLoginModal()">Sign In</button>
+            {% endif %}
         </nav>
     </header>
 
@@ -57,6 +63,10 @@
 
         function closeModal() {
             document.getElementById('signinModal').style.display = "none";
+        }
+
+        function logout() {
+            location.href = "{{ url_for('oauth.logout') }}";
         }
 
         // Close the modal if the user clicks outside of it
