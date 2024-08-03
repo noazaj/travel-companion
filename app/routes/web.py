@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, abort, request, jsonify
 from jinja2 import TemplateNotFound
 import requests
 import os
-import threading
+# import threading
 import json
 
 web_bp = Blueprint('web', __name__,
@@ -47,8 +47,10 @@ def plan_a_trip_post():
     fetch_weather_update(destination)
     itinerary_data_out = generate_itinerary_data(get_itinerary_data)
 
-    return render_template('plan-a-trip.html', gpt_response=gpt_response, notification_update=notification_update, itinerary_data=itinerary_data_out)
-
+    return render_template('plan-a-trip.html',
+                           gpt_response=gpt_response,
+                           notification_update=notification_update,
+                           itinerary_data=itinerary_data_out)
 
 
 @web_bp.route('/recommendations', methods=['GET'])
@@ -56,10 +58,12 @@ def recommendations():
     try:
         weather_data = generate_weather_data(get_weather_data)
         itinerary_data_out = generate_itinerary_data(get_itinerary_data)
-        return render_template('recommendations.html', notification_update=notification_update, weather_data=weather_data, itinerary_data=itinerary_data_out)
+        return render_template('recommendations.html',
+                               notification_update=notification_update,
+                               weather_data=weather_data,
+                               itinerary_data=itinerary_data_out)
     except TemplateNotFound:
         abort(404)
-
 
 
 @web_bp.route('/login-method', methods=['GET'])
@@ -73,6 +77,7 @@ def login_method():
 @web_bp.route('/get-notification', methods=['GET'])
 def get_notification():
     return jsonify(notification_update)
+
 
 ###########################################################
 #
@@ -100,24 +105,29 @@ def promptServiceChat(messages):
     return requests.post('http://' + PROMPT_SVC_HOST + ':' + PROMPT_SVC_PORT +
                          '/v1/prompt/itinerary', json={"messages": messages})
 
+
 def fetch_weather_update(location):
     global notification_update
     global get_weather_data
 
     weather_payload = {"location": location}
-    r = requests.post(f'http://{PROMPT_SVC_HOST}:{PROMPT_SVC_PORT}/v1/prompt/weather', json=weather_payload)
+    url = f'http://{PROMPT_SVC_HOST}:{PROMPT_SVC_PORT}/v1/prompt/weather'
+    r = requests.post(url, json=weather_payload)
 
     if r.status_code == 200:
         data = r.json()
         location = data.get("location", "Unknown location")
-        get_weather_data = data.get("weather-update", "No weather update available")
+        get_weather_data = data.get("weather-update",
+                                    "No weather update available")
         notification_update = {
             'message': f"{get_weather_data}",
             'link': '/recommendations'
         }
 
+
 def generate_weather_data(weather_data):
     return json.loads(f"{weather_data}")
+
 
 def generate_itinerary_data(agenda_data):
     return json.loads(f"{agenda_data}")
