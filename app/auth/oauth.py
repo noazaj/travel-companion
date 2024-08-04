@@ -58,6 +58,7 @@ def oauth2_login(provider):
     # Generate random string for state parameter
     state = secrets.token_urlsafe(16)
     session['oauth2_state'] = state
+    session['return_url'] = request.args.get('next') or url_for('web.home')
 
     # Dynamically create the client and authorize redirect
     redirect_uri = url_for('oauth.oauth2_authorize',
@@ -78,15 +79,12 @@ def oauth2_authorize(provider):
     client = oauth.create_client(provider)
     if not client:
         abort(404)
-
     try:
         # Validate state parameter
         if request.args.get('state') != session.get('oauth2_state'):
             abort(403)
-
         token = client.authorize_access_token()
         session['token'] = token
-
         # Facebook uses /me as beginning of endpoint
         if provider == 'facebook':
             resp = client.get('me?fields=id,name,email', token=token)
@@ -95,36 +93,20 @@ def oauth2_authorize(provider):
         else:
             resp = client.get('user', token=token)
 
+        # Store the user profile in the session
         profile = resp.json()
         session['profile'] = profile
-        return redirect(url_for('oauth.profile'))
+
+        return_url = session.pop('return_url', url_for('web.home'))
+        return redirect(return_url)
     except Exception as err:
         return f'Authorization failed: {err}', 400
 
 
-########################################
-#
-# Create a profile endpoint to display user profile
-#
-########################################
-@oauth_bp.route('/profile')
-def profile():
-    profile = session.get('profile')
-    if not profile:
-        return redirect(url_for('oauth.oauth2_login'))
-
-    # Check for google provider
-    if 'sub' in profile:
-        user_id = profile['sub']
-    else:
-        user_id = profile['id']
-
-    formatted_string = (
-        f"\tID: {user_id}\n"
-        f"\tEmail: {profile['email']}\n"
-        f"\tToken: {session['token']['access_token']}"
-    )
-    return formatted_string
+@oauth_bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('web.home'))
 
 # Resources Used:
 # https://docs.authlib.org/en/latest/client/frameworks.html#frameworks-clients

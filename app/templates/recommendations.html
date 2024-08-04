@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Recommendations with Sidebar - Travel Companion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles-real-time.css') }}" type="text/css">
+    </head>
+<body>
+    <!-- Notification Banner -->
+    <div id="notification-banner" class="notification-banner" style="display: none;">
+        <p id="notification-message"></p>
+        <button class="close-btn" onclick="closeNotification()">×</button>
+        <a id="notification-link" href="#" class="notification-link">View Recommendations</a>
+    </div>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo_white.png') }}" alt="Logo">
+            </div>
+            <ul>
+                <li><a href="{{ url_for('web.home') }}">Home</a></li>
+                <li><a href="{{ url_for('web.plan_a_trip') }}">Plan a Trip</a></li>
+                <li><a href="{{ url_for('web.recommendations') }}">Live Advice</a></li>
+                <li><a href="#history">History</a></li>
+                <li><a href="#support">Support</a></li>
+            </ul>
+            {% if 'profile' in session %}
+                <div class="user-info">
+                    <button class="log-out" onclick="logout()"><span>{{ session['profile']['name'] }}</span></button>
+                </div>
+            {% else %}
+                <button class="log-in" onclick="openLoginModal()">Sign In</button>
+            {% endif %}
+        </nav>
+    </header>
+
+    <!-- Sign In Modal -->
+    <div id="signinModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Sign In</h2>
+            <button class="sign-in-btn github-btn" onclick="location.href='login/github'">Sign in with GitHub</button>
+            <button class="sign-in-btn google-btn" onclick="location.href='login/google'">Sign in with Google</button>
+            <button class="sign-in-btn facebook-btn" onclick="location.href='login/facebook'">Sign in with Facebook</button>
+        </div>
+    </div>
+
+    <main>
+        <section class="adventure">
+            <img src="{{ url_for('static', filename='images/night_sky.jpg') }}" alt="Coastal City">
+            <div class="container">
+                <aside class="calendar">
+                    <h1>Itinerary</h1>
+                    <div class="accordion" id="itinerary-accordion">
+                        {% if itinerary_data %}
+                            {% for day, events in itinerary_data.items() %}
+                            <div class="accordion-item">
+                                <h1 class="accordion-header" onclick='toggleAccordion("{{ day }}")'>{{ day }}</h1>
+                                <div class="accordion-content" id="{{ day }}">
+                                    <ul>
+                                        {% for event in events %}
+                                        <li onclick="updateRecommendations('{{ event.time }} - {{ event.activity }}', this.dataset.details)" data-details='{{ event | tojson | safe }}'>
+                                            {{ event.time }} - {{ event.activity }}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>No events planned for this itinerary.</p>
+                        {% endif %}
+                    </div>    
+                </aside>
+                <section class="recommendations">
+                    <div class="weather">
+                        <h1>Weather Report</h1>
+                        <div class="weather-scroll">
+                            {% if weather_data %}
+                                {% for hour in weather_data.forecast %}
+                                <div class="weather-hour">
+                                    <p>{{ hour.time }}</p>
+                                    {% if hour.condition == "Clear Night" %}
+                                    <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Clear Night">
+                                    {% elif hour.condition == "Rainy Night" %}
+                                    <img src="{{ url_for('static', filename='images/cloud-moon-rain-solid.svg') }}" class="rainy-night-icon" alt="Rainy Night">
+                                    {% elif hour.condition == "Cloudy Night" %}
+                                    <img src="{{ url_for('static', filename='images/cloud-moon-solid.svg') }}" class="cloudy-night-icon" alt="Cloudy Night">
+                                    {% elif hour.condition == "Sunny" %}
+                                    <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
+                                    {% elif hour.condition == "Partly Cloudy" %}
+                                    <img src="{{ url_for('static', filename='images/cloud-sun-solid.svg') }}" class="partly-cloudy-icon" alt="Partly Cloudy">
+                                    {% elif hour.condition == "Rainy" %}
+                                    <img src="{{ url_for('static', filename='images/cloud-showers-heavy-solid.svg') }}" class="rain-icon" alt="Rainy">
+                                    {% elif hour.condition == "Stormy" %}
+                                    <img src="{{ url_for('static', filename='images/cloud-bolt-solid.svg') }}" class="storm-icon" alt="Stormy">
+                                    {% elif hour.condition == "Cloudy" %}
+                                    <img src="{{ url_for('static', filename='images/cloud-solid.svg') }}" class="cloudy-icon" alt="Cloudy">
+                                    {% elif hour.condition == "Snowy" %}
+                                    <img src="{{ url_for('static', filename='images/snowflake-solid.svg') }}" class="cloudy-icon" alt="Snowy">
+
+                                    
+                                    {% elif "Rain" in hour.condition and "Night" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/cloud-moon-rain-solid.svg') }}" class="rainy-night-icon" alt="Rainy Night">
+                                    {% elif "Cloud" in hour.condition and "Night" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/cloud-moon-solid.svg') }}" class="cloudy-night-icon" alt="Cloudy Night">
+                                    {% elif "Night" in hour.condition %}
+                                    <img src="{{ url_for('static', filename='images/moon-solid.svg') }}" class="moon-icon" alt="Clear Night">
+                                    {% elif "Cloudy" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/cloud-sun-solid.svg') }}" class="partly-cloudy-icon" alt="Partly Cloudy">
+                                    {% elif "Rain" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/cloud-showers-heavy-solid.svg') }}" class="rain-icon" alt="Rainy">
+                                    {% elif "Storm" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/cloud-bolt-solid.svg') }}" class="storm-icon" alt="Stormy">
+                                    {% elif "Cloud" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/cloud-solid.svg') }}" class="cloudy-icon" alt="Cloudy">
+                                    {% elif "Snow" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/snowflake-solid.svg') }}" class="cloudy-icon" alt="Snowy">
+                                    {% elif "Sun" in hour.condition  %}
+                                    <img src="{{ url_for('static', filename='images/sun-solid.svg') }}" class="sunny-icon" alt="Sunny">
+                                    {% endif %}
+                                    <p>{{ hour.temperature }}
+                                        {% if "C" in hour.FahrenheitorCelsius %}
+                                            °C
+                                        {% elif "F" in hour.FahrenheitorCelsius %}
+                                            °F
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <p>No weather pulled for this itinerary.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="recommendations-list">
+                        <h1>Recommendations</h1>
+                        <div id="recommendation-content">
+                            <p>Select an event to see recommendations.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Copyright © Travel Companion 2024. All Rights Reserved.</p>
+    </footer>
+    <script id="itinerary-data" type="application/json">
+        {{ itinerary_data | tojson | safe }}
+    </script>
+    <script id="weather-data" type="application/json">
+        {{ weather_data | tojson | safe }}
+    </script>
+
+    <script>
+        // Retrieve the itinerary data from the script tag
+        const itineraryData = JSON.parse(document.getElementById('itinerary-data').textContent);
+        const weatherData = JSON.parse(document.getElementById('weather-data').textContent);
+        let notificationMessagesText = "";
+
+
+        function toggleAccordion(id) {
+            var content = document.getElementById(id);
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        }
+
+        function decodeHtmlEntities(str) {
+            var txt = document.createElement('textarea');
+            txt.innerHTML = str;
+            return txt.value;
+        }
+
+        function updateRecommendations(event, details) {
+            details = JSON.parse(details.replace(/&quot;/g,'"'));
+            const recommendationContent = document.getElementById('recommendation-content');
+            recommendationContent.innerHTML = `
+                <h2>${decodeHtmlEntities(event)}</h2>
+                <p><strong>Location:</strong> ${decodeHtmlEntities(details.location)}</p>
+                <p><strong>Activity:</strong> ${decodeHtmlEntities(details.activity)}</p>
+                <p><strong>Average Duration:</strong> ${details["average duration"]} hours</p>
+                <p><strong>Cost:</strong> $${details.cost}</p>
+            `;
+        }
+
+        function openLoginModal() {
+            document.getElementById('signinModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('signinModal').style.display = "none";
+        }
+
+        function logout() {
+            location.href = "{{ url_for('oauth.logout') }}";
+        }
+
+        // Close the modal if the user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('signinModal')) {
+                document.getElementById('signinModal').style.display = "none";
+            }
+        }
+
+        function closeNotification() {
+            document.getElementById('notification-banner').style.display = 'none';
+        }
+
+        function showNotification() {
+            const notificationBanner = document.getElementById('notification-banner');
+            const notificationMessages = document.getElementById('notification-message');
+
+            if (notificationMessages) {
+                const notificationMessage = document.createElement('p');
+                notificationMessage.innerText = notificationMessagesText;
+                notificationMessages.appendChild(notificationMessage);
+                notificationBanner.style.display = 'block';
+            } else {
+                console.error('Notification messages container not found');
+            }
+        }
+
+        function checkWeatherForDay1() {
+            const day1Events = itineraryData["Day 1"];
+            const weatherConditions = ["Rainy Night", "Rainy", "Stormy", "Snowy"];
+
+            day1Events.forEach(event => {
+                const eventTime = event.time;
+                const eventActivity = event.activity;
+
+                weatherData.forecast.forEach(hour => {
+                    if (weatherConditions.includes(hour.condition) && hour.time === eventTime) {
+                        console.log("Showing hour notification with message:", hour);
+                        notificationMessagesText += `Warning of incoming ${hour.condition} during ${hour.time} over ${eventActivity} planned.\n`;
+                    }
+                });
+            });
+
+            // Show all accumulated notifications
+            showNotification();
+        }
+
+        // Call checkWeatherForDay1 to show notifications based on weather conditions for Day 1 events
+        checkWeatherForDay1();
+    </script>
+</body>
+</html>

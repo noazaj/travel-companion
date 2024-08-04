@@ -18,9 +18,14 @@
                 <li><a href="{{ url_for('web.recommendations') }}">Live Advice</a></li>
                 <li><a href="#history">History</a></li>
                 <li><a href="#support">Support</a></li>
-                <li><a href="#advice">Live Advice</a></li>
             </ul>
-            <button class="log-in" onclick="openLoginModal()">Sign In</button>
+            {% if 'profile' in session %}
+                <div class="user-info">
+                    <button class="log-out" onclick="logout()"><span>{{ session['profile']['name'] }}</span></button>
+                </div>
+            {% else %}
+                <button class="log-in" onclick="openLoginModal()">Sign In</button>
+            {% endif %}
         </nav>
     </header>
 
@@ -41,7 +46,7 @@
             <div class="plan-your-trip-container">
                 <div class="plan-your-trip-text">
                     <h1>Plan Your Trip</h1>
-                    <form class="plan-your-trip-form" method="POST" href="{{ url_for('web.plan_a_trip') }}">
+                    <form class="plan-your-trip-form" method="POST" href="{{ url_for('web.plan_a_trip_post') }}">
                         <label for="destination">Destination:</label>
                         <input type="text" id="destination" name="destination" required>
                         
@@ -50,6 +55,9 @@
                         
                         <label for="num-days">Number of Days:</label>
                         <input type="number" id="num-days" name="num-days" min="1" required>
+                        
+                        <label for="budget">Total Budget:</label>
+                        <input type="number" id="budget" name="budget" min="1" required>
                         
                         <label for="preferences">Travel Preferences:</label>
                         <textarea id="preferences" name="preferences" rows="4" placeholder="Describe your travel preferences..."></textarea>
@@ -61,17 +69,28 @@
                     <h1>Your Tailored Itinerary</h1>
                     <!-- Placeholder for recommended trip plan -->
                     <div class="plan-your-trip-recommendation-container">
-                        {{gpt_response}}
-                    </div>
-                    <div class="plan-your-trip-chat">
-                        <form class="plan-your-trip-chat" method="PATCH" href="{{ url_for('web.plan_a_trip') }}">
-                            <label for="user-chat-msg">Chat Box:</label>
-                            <textarea id="user-chat-msg" name="user-chat-msg" rows="4" placeholder="Refine your itinerary here..."></textarea>
-                            <button type="submit" class="plan-your-trip-submit-btn">Send</button>
-                        </form>
+                        <div class="accordion" id="itinerary-accordion">
+                            {% if itinerary_data %}
+                                {% for day, events in itinerary_data.items() %}
+                                <div class="accordion-item">
+                                    <h1 class="accordion-header" onclick='toggleAccordion("{{ day }}")'>{{ day }}</h1>
+                                    <div class="accordion-content" id="{{ day }}">
+                                        <ul>
+                                            {% for event in events %}
+                                            <li onclick="showEventDetails(this)" data-details='{{ event | tojson | safe }}'>
+                                                {{ event.time }} - {{ event.activity }}
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                            <p>No events planned for this itinerary.</p>
+                        {% endif %}
+                        </div> 
                     </div>
                 </div>
-                
             </div>
         </section>
     </main>
@@ -79,12 +98,57 @@
         <p>Copyright © Travel Companion 2024. All Rights Reserved.</p>
     </footer>
     <script>
+        // const itineraryData = JSON.parse("{{ itinerary_data | default('{}', true) | tojson | safe }}");
+        // const itinerary = itineraryData || {};
+
+        function toggleAccordion(id) {
+            var content = document.getElementById(id);
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        }
+
+        function decodeHtmlEntities(str) {
+            var txt = document.createElement('textarea');
+            txt.innerHTML = str;
+            return txt.value;
+        }
+
+        function showEventDetails(element) {
+            const details = JSON.parse(element.dataset.details.replace(/&quot;/g,'"'));
+            const detailsContent = `
+                <h2>${decodeHtmlEntities(element.innerText)}</h2>
+                <p><strong>Location:</strong> ${decodeHtmlEntities(details.location)}</p>
+                <p><strong>Activity:</strong> ${decodeHtmlEntities(details.activity)}</p>
+                <p><strong>Average Duration:</strong> ${details["average duration"]} hours</p>
+                <p><strong>Cost:</strong> $${details.cost}</p>
+            `;
+            const detailsContainer = document.createElement('div');
+            detailsContainer.innerHTML = detailsContent;
+            detailsContainer.className = 'event-details';
+
+            // Remove existing details if any
+            const existingDetails = element.parentElement.querySelector('.event-details');
+            if (existingDetails) {
+                existingDetails.remove();
+            }
+
+            // Append the new details
+            element.parentElement.appendChild(detailsContainer);
+        }
+
         function openLoginModal() {
             document.getElementById('signinModal').style.display = 'block';
         }
 
         function closeModal() {
             document.getElementById('signinModal').style.display = "none";
+        }
+
+        function logout() {
+            location.href = "{{ url_for('oauth.logout') }}";
         }
 
         // Close the modal if the user clicks outside of it
