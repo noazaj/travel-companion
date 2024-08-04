@@ -31,11 +31,18 @@ def plan_a_trip():
 
 @web_bp.route('/plan-a-trip', methods=['POST'])
 def plan_a_trip_post():
-
     # get json body from POST request
     content = request.form
     # contact prompt-svc
     gpt_response = promptServiceInitialReq(content)
+    return render_template('plan-a-trip.html', gpt_response=gpt_response)
+
+@web_bp.route('/plan-a-trip', methods=['PATCH'])
+def plan_a_trip_patch():
+    # get json body from POST request
+    content = request.form
+    # contact prompt-svc
+    gpt_response = promptServiceChat(content)
     return render_template('plan-a-trip.html', gpt_response=gpt_response)
 
 
@@ -75,9 +82,13 @@ def promptServiceInitialReq(content):
     return gpt_message
 
 
-def promptServiceChat(messages):
+def promptServiceChat(content):
     return requests.post('http://' + PROMPT_SVC_HOST + ':' + PROMPT_SVC_PORT +
-                         '/v1/prompt/itinerary', json={"messages": messages})
+                         '/v1/prompt/trip-planning-chat', json=content)
+    response = r.json()
+    gpt_message = response['gpt-message']
+    return gpt_message
+
 
 # Resource(s) Used:
 # https://flask.palletsprojects.com/en/3.0.x/blueprints/

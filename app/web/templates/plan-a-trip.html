@@ -63,7 +63,15 @@
                     <div class="plan-your-trip-recommendation-container">
                         {{gpt_response}}
                     </div>
+                    <div class="plan-your-trip-chat">
+                        <form class="plan-your-trip-chat" method="PATCH" href="{{ url_for('web.plan_a_trip') }}">
+                            <label for="user-chat-msg">Chat Box:</label>
+                            <textarea id="user-chat-msg" name="user-chat-msg" rows="4" placeholder="Refine your itinerary here..."></textarea>
+                            <button type="submit" class="plan-your-trip-submit-btn">Send</button>
+                        </form>
+                    </div>
                 </div>
+                
             </div>
         </section>
     </main>
