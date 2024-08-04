@@ -90,7 +90,7 @@ def get_notification():
 #
 ###########################################################
 def promptServiceInitialReq(content):
-    r = requests.post('http://' + PROMPT_SVC_URL +
+    r = requests.post(PROMPT_SVC_URL +
                       '/v1/prompt/initial-trip-planning-req',
                       json=content)
     response = r.json()
@@ -101,7 +101,7 @@ def promptServiceInitialReq(content):
 
 
 def promptServiceChat(messages):
-    return requests.post('http://' + PROMPT_SVC_URL +
+    return requests.post(PROMPT_SVC_URL +
                          '/v1/prompt/itinerary', json={"messages": messages})
 
 
@@ -110,7 +110,7 @@ def fetch_weather_update(location):
     global get_weather_data
 
     weather_payload = {"location": location}
-    url = f'http://{PROMPT_SVC_URL}/v1/prompt/weather'
+    url = f'{PROMPT_SVC_URL}/v1/prompt/weather'
     r = requests.post(url, json=weather_payload)
 
     if r.status_code == 200:
