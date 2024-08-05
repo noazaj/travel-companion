@@ -1,8 +1,6 @@
 from flask import Blueprint, render_template, abort, request, jsonify
 from jinja2 import TemplateNotFound
 import requests
-import asyncio
-import aiohttp
 import os
 # import threading
 import json
@@ -42,10 +40,10 @@ async def plan_a_trip_post():
     destination = content.get('destination')
 
     # Contact prompt-svc for trip planning
-    gpt_response = await promptServiceInitialReq(content)
+    gpt_response = promptServiceInitialReq(content)
 
     # Fetch weather update for the destination
-    await fetch_weather_update(destination)
+    fetch_weather_update(destination)
     itinerary_data_out = generate_itinerary_data(get_itinerary_data)
 
     return render_template('plan-a-trip.html',
@@ -83,43 +81,39 @@ def get_notification():
 #   - gpt_message:  string
 #
 ###########################################################
-async def promptServiceInitialReq(content):
-    async with aiohttp.ClientSession() as session:
-        async with session.post(PROMPT_SVC_URL +
-                        '/v1/prompt/initial-trip-planning-req',
-                        json=content) as r:
-            response = await r.json()
-            gpt_message = response['gpt-message']
-            global get_itinerary_data
-            get_itinerary_data = gpt_message
-            return gpt_message
+def promptServiceInitialReq(content):
+    r = requests.post(PROMPT_SVC_URL +
+                      '/v1/prompt/initial-trip-planning-req',
+                      json=content)
+    response = r.json()
+    gpt_message = response['gpt-message']
+    global get_itinerary_data
+    get_itinerary_data = gpt_message
+    return gpt_message
 
 
-async def promptServiceChat(messages):
-    async with aiohttp.ClientSession() as session:
-        async with session.post(PROMPT_SVC_URL +
-                         '/v1/prompt/itinerary', json={"messages": messages}) as r:
-            return await r.json()
+def promptServiceChat(messages):
+    return requests.post(PROMPT_SVC_URL +
+                         '/v1/prompt/itinerary', json={"messages": messages})
 
 
-async def fetch_weather_update(location):
+def fetch_weather_update(location):
     global notification_update
     global get_weather_data
 
     weather_payload = {"location": location}
     url = f'{PROMPT_SVC_URL}/v1/prompt/weather'
-    
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, json=weather_payload) as r:
-            if r.status_code == 200:
-                data = await r.json()
-                location = data.get("location", "Unknown location")
-                get_weather_data = data.get("weather-update",
-                                            "No weather update available")
-                notification_update = {
-                    'message': f"{get_weather_data}",
-                    'link': '/recommendations'
-                }
+    r = requests.post(url, json=weather_payload)
+
+    if r.status_code == 200:
+        data = r.json()
+        location = data.get("location", "Unknown location")
+        get_weather_data = data.get("weather-update",
+                                    "No weather update available")
+        notification_update = {
+            'message': f"{get_weather_data}",
+            'link': '/recommendations'
+        }
 
 
 def generate_weather_data(weather_data):

@@ -3,7 +3,6 @@ from app.auth.oauth import oauth_bp, configure_oauth
 from app.routes.web import web_bp, fetch_weather_update
 from dotenv import load_dotenv
 import threading
-import os
 
 load_dotenv()
 
@@ -30,6 +29,4 @@ start_notification_thread()
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8080))
-    app.run(host='0.0.0.0', port=port)
     app.run()
