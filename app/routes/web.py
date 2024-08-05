@@ -53,6 +53,26 @@ def plan_a_trip_post():
                            itinerary_data=itinerary_data_out)
 
 
+@web_bp.route('/chat-plan-a-trip', methods=['POST'])
+def plan_a_trip_chat():
+    print("plan a trip chat")
+    # Get form data
+    content = request.form
+    # destination = content.get('destination')
+
+    # Contact prompt-svc for trip planning
+    gpt_response = promptServiceChat(content)
+
+    # Fetch weather update for the destination
+    fetch_weather_update("thailand")
+    itinerary_data_out = generate_itinerary_data(get_itinerary_data)
+
+    return render_template('plan-a-trip.html',
+                           gpt_response=gpt_response,
+                           notification_update=notification_update,
+                           itinerary_data=itinerary_data_out)
+
+
 @web_bp.route('/recommendations', methods=['GET'])
 def recommendations():
     try:
@@ -101,9 +121,15 @@ def promptServiceInitialReq(content):
     return gpt_message
 
 
-def promptServiceChat(messages):
-    return requests.post('http://' + PROMPT_SVC_HOST + ':' + PROMPT_SVC_PORT +
-                         '/v1/prompt/itinerary', json={"messages": messages})
+def promptServiceChat(content):
+    r = requests.post('http://' + PROMPT_SVC_HOST + ':' + PROMPT_SVC_PORT +
+                      '/v1/prompt/trip-planning-chat',
+                      json=content)
+    response = r.json()
+    gpt_message = response['gpt-message']
+    global get_itinerary_data
+    get_itinerary_data = gpt_message
+    return gpt_message
 
 
 def fetch_weather_update(location):
