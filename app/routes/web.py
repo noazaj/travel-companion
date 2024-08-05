@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, abort, request, jsonify
 from jinja2 import TemplateNotFound
 import requests
 import os
-import threading
+# import threading
 import json
 
 web_bp = Blueprint('web', __name__,
@@ -40,8 +40,7 @@ def plan_a_trip_post():
     destination = content.get('destination')
 
     # Contact prompt-svc for trip planning
-    gpt_response = threading.Thread(target=promptServiceInitialReq(content))
-    # gpt_response = promptServiceInitialReq(content)
+    gpt_response = promptServiceInitialReq(content)
 
     # Fetch weather update for the destination
     fetch_weather_update(destination)
