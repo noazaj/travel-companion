@@ -53,24 +53,18 @@ def plan_a_trip_post():
                            itinerary_data=itinerary_data_out)
 
 
+
 @web_bp.route('/chat-plan-a-trip', methods=['POST'])
 def plan_a_trip_chat():
-    print("plan a trip chat")
-    # Get form data
-    content = request.form
-    # destination = content.get('destination')
+    content = request.get_json()
+    message = content.get('message')
 
-    # Contact prompt-svc for trip planning
-    gpt_response = promptServiceChat(content)
+    if not message:
+        return jsonify(ERROR_MESSAGE_400), 400
 
-    # Fetch weather update for the destination
-    fetch_weather_update("thailand")
-    itinerary_data_out = generate_itinerary_data(get_itinerary_data)
+    gpt_chat_response = promptServiceChat({"message": message})
 
-    return render_template('plan-a-trip.html',
-                           gpt_response=gpt_response,
-                           notification_update=notification_update,
-                           itinerary_data=itinerary_data_out)
+    return jsonify({'gpt_chat_response': gpt_chat_response})
 
 
 @web_bp.route('/recommendations', methods=['GET'])
@@ -122,14 +116,14 @@ def promptServiceInitialReq(content):
 
 
 def promptServiceChat(content):
+
     r = requests.post('http://' + PROMPT_SVC_HOST + ':' + PROMPT_SVC_PORT +
                       '/v1/prompt/trip-planning-chat',
                       json=content)
     response = r.json()
-    gpt_message = response['gpt-message']
-    global get_itinerary_data
-    get_itinerary_data = gpt_message
-    return gpt_message
+    print(response)
+    gpt_chat_message = response['messages']
+    return gpt_chat_message
 
 
 def fetch_weather_update(location):
