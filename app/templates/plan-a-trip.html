@@ -43,8 +43,8 @@
     <main>
         <section class="adventure">
             <img src="{{ url_for('static', filename='images/ocean_boats.jpg') }}" alt="Mountain">
-            <div class="plan-your-trip-container">
-                <div class="plan-your-trip-text">
+            <div class="plan-your-trip-container" >
+                <div class="plan-your-trip-text" id="plan-your-trip-container">
                     <h1>Plan Your Trip</h1>
                     <form class="plan-your-trip-form" method="POST" href="{{ url_for('web.plan_a_trip_post') }}">
                         <label for="destination">Destination:</label>
@@ -62,7 +62,7 @@
                         <label for="preferences">Travel Preferences:</label>
                         <textarea id="preferences" name="preferences" rows="4" placeholder="Describe your travel preferences..."></textarea>
                         
-                        <button type="submit" class="plan-your-trip-submit-btn">Get Itinerary</button>
+                        <button type="submit" class="plan-your-trip-submit-btn">Get Itinerary </button>
                     </form>
                 </div>
                 <div class="plan-your-trip-output">
@@ -87,12 +87,22 @@
                                 {% endfor %}
                             {% else %}
                             <p>No events planned for this itinerary.</p>
-                        {% endif %}
+                            {% endif %}
                         </div> 
                     </div>
                 </div>
             </div>
         </section>
+
+        <div class="chat-box" id="chat-box">
+            <button class="update-itinerary-btn" onclick="updateItinerary()">Update Itinerary</button>
+            <div class="chat-messages" id="chat-messages"></div>
+            <form id="chat-form" onsubmit="sendMessage(event)">
+                <input type="text" id="chat-input" name="message" placeholder="Type your message here..." required>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+
     </main>
     <footer>
         <p>Copyright © Travel Companion 2024. All Rights Reserved.</p>
@@ -100,6 +110,12 @@
     <script>
         // const itineraryData = JSON.parse("{{ itinerary_data | default('{}', true) | tojson | safe }}");
         // const itinerary = itineraryData || {};
+
+        // function replaceContent(event) {
+        //     event.preventDefault();
+        //     document.getElementById('plan-your-trip-container').style.display = 'none';
+        //     document.getElementById('chat-box').style.display = 'block';
+        // }
 
         function toggleAccordion(id) {
             var content = document.getElementById(id);
@@ -117,7 +133,7 @@
         }
 
         function showEventDetails(element) {
-            const details = JSON.parse(element.dataset.details.replace(/&quot;/g,'"'));
+            const details = JSON.parse(element.dataset.details.replace(/&quot;/g, '"'));
             const detailsContent = `
                 <h2>${decodeHtmlEntities(element.innerText)}</h2>
                 <p><strong>Location:</strong> ${decodeHtmlEntities(details.location)}</p>
@@ -137,6 +153,11 @@
 
             // Append the new details
             element.parentElement.appendChild(detailsContainer);
+
+            // Open chat box with pre-filled prompt
+            const chatInput = document.getElementById('chat-input');
+            chatInput.value = `I want to know more about ${details.activity} at ${details.time} on ${details.location}.`;
+            chatInput.focus();
         }
 
         function openLoginModal() {
@@ -155,8 +176,69 @@
         window.onclick = function(event) {
             if (event.target == document.getElementById('signinModal')) {
                 document.getElementById('signinModal').style.display = "none";
+            }
         }
-    }
+
+        // Chat box functionality
+        function sendMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (message) {
+                const chatMessages = document.getElementById('chat-messages');
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user-message';
+                userMessage.innerText = message;
+                chatMessages.appendChild(userMessage);
+
+                fetch("/chat-plan-a-trip", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'message bot-message';
+                    botMessage.innerText = data.gpt_chat_response;
+                    chatMessages.appendChild(botMessage);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                })
+                .catch(error => console.error('Error:', error));
+
+                input.value = '';
+            }
+        }
+
+
+        function updateItinerary() {
+            // Logic to update the itinerary
+            alert('Update Itinerary functionality to be implemented');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Listening for changes in the itinerary_data div
+            const itineraryOutput = document.getElementById('itinerary-output');
+            const observer = new MutationObserver((mutations) => {
+                for (const mutation of mutations) {
+                    if (mutation.type === 'childList') {
+                        document.getElementById('plan-your-trip-container').style.display = 'none';
+                        document.getElementById('chat-box').style.display = 'block';
+                    }
+                }
+            });
+
+            observer.observe(itineraryOutput, { childList: true, subtree: true });
+
+            document.getElementById('chat-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                sendMessage(event);
+            });
+        });
+
+
     </script>
 </body>
 </html>
