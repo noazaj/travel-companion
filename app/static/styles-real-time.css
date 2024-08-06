@@ -1,3 +1,7 @@
+/* CS467 Online Capstone: GPT API Challenge
+Kongkom Hiranpradit, Connor Flattum, Nathan Swaim, Noah Zajicek */
+
+/* Initial body setup for headers/ nav and main page */
 body {
     font-family: Arial, sans-serif;
     background-color: #fff;
@@ -111,6 +115,8 @@ footer {
     bottom: 0;
 }
 
+/* Recommendations page styles */
+
 
 .container {
     display: flex;
@@ -118,6 +124,8 @@ footer {
     gap: 1rem;
     padding: 2rem;
 }
+
+/* Calendar section in recommendations page */
 
 .calendar {
     position: absolute;
@@ -179,6 +187,7 @@ footer {
     flex-direction: column;
 }
 
+/* Weather container on recommendations page */
 .weather {
     position: absolute;
     top: 7rem;
@@ -209,6 +218,7 @@ footer {
     height: 2rem;
 }
 
+/* Customize weather icon colors */
 .sunny-icon {
     filter: brightness(0) saturate(100%) invert(73%) sepia(58%) saturate(365%) hue-rotate(351deg) brightness(101%) contrast(99%);
 }

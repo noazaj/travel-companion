@@ -1,3 +1,7 @@
+/* CS467 Online Capstone: GPT API Challenge
+Kongkom Hiranpradit, Connor Flattum, Nathan Swaim, Noah Zajicek */
+
+/* Initial body setup for headers/ nav and main page */
 body {
     font-family: Arial, sans-serif;
     background-color: #fff;
@@ -55,6 +59,7 @@ main {
 }
 
 /* Home ui css */
+/* adventure theme and image is supported across all UI */
 .adventure {
     height: 100vh;
     overflow: hidden;
@@ -113,7 +118,7 @@ footer {
     bottom: 0;
 }
 
-/* Plan a trip css  */
+/* Plan a trip */
 .plan-your-trip-container {
     display: flex;
     justify-content: center;
@@ -147,8 +152,7 @@ footer {
     color: #fff;
     background: rgba(117, 117, 117, 0.6);
     padding: 0.75rem;
-    width: calc(100% - 1rem); /* Adjust for padding */
-    /* padding: 10px; */
+    width: calc(100% - 1rem); 
     border: 1px solid #ccc;
     border-radius: 5px;
     height: 1rem;
@@ -157,7 +161,7 @@ footer {
 
 .plan-your-trip-form textarea::placeholder {
     font-weight: bold;
-    color: #fff; /* Change this to your desired placeholder color */
+    color: #fff; 
 }
 
 .plan-your-trip-form textarea {
@@ -219,11 +223,12 @@ footer {
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    min-height: 39rem; /* Placeholder height */
+    min-height: 39rem; 
     overflow-y: auto;
     max-height: 39rem;
 }
 
+/* Accoridan on plan a trip page */
 .accordion-item {
     margin-bottom: 0px;
 }
@@ -267,7 +272,7 @@ footer {
     background-color: #91ffcd63;
 }
 
-/* Chat box styles */
+/* Chat box on plan a trip page */
 .chat-box {
     position: fixed;
     bottom: 2.75rem;
@@ -321,7 +326,6 @@ footer {
 
 .user-message {
     background: #d1e7dd;
-    /* align-self: flex-end; */
     overflow-y: auto;
 }
 
@@ -351,7 +355,7 @@ footer {
 
 #chat-input::placeholder {
     font-weight: bold;
-    color: #fff; /* Change this to your desired placeholder color */
+    color: #fff; 
 }
 
 
@@ -385,6 +389,7 @@ footer {
     padding: 2rem;
 }
 
+/* Calendar section in recommendations page */
 .calendar {
     top: 20rem;
     left: 70rem;
@@ -414,14 +419,6 @@ footer {
     background-color: #eaeaea;
 }
 
-.recommendations {
-    top: 20rem;
-    left: 70rem;
-    flex: 1;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-}
 
 .weather {
     top: 20rem;
@@ -430,6 +427,15 @@ footer {
     padding: 1rem;
     border-radius: 5px;
     margin-bottom: 1rem;
+}
+
+.recommendations {
+    top: 20rem;
+    left: 70rem;
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .recommendations-list {
@@ -511,8 +517,8 @@ footer {
     color: white;
 }
 
+/* Notification banner on recommendations page*/
 /* Notification banner */
-
 .notification-banner {
     background-color: #f44336;
     color: white;
@@ -531,7 +537,7 @@ footer {
     padding: 0;
     font-size: 1.2rem;
 }
-
+/* notification close button */
 .notification-banner .close-btn {
     background: none;
     border: none;

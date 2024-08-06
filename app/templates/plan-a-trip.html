@@ -1,3 +1,6 @@
+<!-- CS467 Online Capstone: GPT API Challenge
+Kongkom Hiranpradit, Connor Flattum, Nathan Swaim, Noah Zajicek -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,16 +96,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- <div class="chat-box" id="chat-box">
-            <div class="chat-header" onclick="toggleChat()">Chat with Us</div>
-            <div class="chat-content" id="chat-content"></div>
-            <div class="chat-input-container">
-                <input type="text" id="chat-input" name="message" placeholder="Type your message here..." required>
-                <button type="button" onclick="sendMessage()">Send</button>
-            </div>
-        </div> -->
-
         <div class="chat-box" id="chat-box">
             <button class="update-itinerary-btn" onclick="updateItinerary()">Update Itinerary</button>
             <div class="chat-messages" id="chat-messages"></div>
@@ -118,7 +111,7 @@
         <p>Copyright © Travel Companion 2024. All Rights Reserved.</p>
     </footer>
     <script>
-
+        // Toggle accordian dropdown
         function toggleAccordion(id) {
             var content = document.getElementById(id);
             if (content.style.display === "block") {
@@ -128,14 +121,18 @@
             }
         }
 
+        // Set text entities as strings
         function decodeHtmlEntities(str) {
             var txt = document.createElement('textarea');
             txt.innerHTML = str;
             return txt.value;
         }
 
+        // Show event details in fancy drop dropdown
         function showEventDetails(element) {
+            // Parse details
             const details = JSON.parse(element.dataset.details.replace(/&quot;/g, '"'));
+            // Set content to html structure
             const detailsContent = `
                 <h2>${decodeHtmlEntities(element.innerText)}</h2>
                 <p><strong>Location:</strong> ${decodeHtmlEntities(details.location)}</p>
@@ -147,18 +144,18 @@
             detailsContainer.innerHTML = detailsContent;
             detailsContainer.className = 'event-details';
 
-            // Remove existing details if any
+            // Remove any pre existing details
             const existingDetails = element.parentElement.querySelector('.event-details');
             if (existingDetails) {
                 existingDetails.remove();
             }
 
-            // Append the new details
+            // add the new details to container
             element.parentElement.appendChild(detailsContainer);
 
-            // Open chat box with pre-filled prompt
+            // Add details to chat box with pre filled input
             const chatInput = document.getElementById('chat-input');
-            chatInput.value = `I want to know more about ${details.activity} at ${details.time} on ${details.location}.`;
+            chatInput.value = `I want a different travel recommendation to ${details.activity} at ${details.time} on ${details.location}.`;
             chatInput.focus();
         }
 
@@ -181,18 +178,24 @@
             }
         }
 
-        // Chat box functionality
+        // Chat box message post and structureing
         function sendMessage(event) {
+            // Prevent unwanted clicks
             event.preventDefault();
+
+            // Get chat input details
             const input = document.getElementById('chat-input');
             const message = input.value.trim();
             if (message) {
+                // Get chat message from user and output in chat space
                 const chatMessages = document.getElementById('chat-messages');
                 const userMessage = document.createElement('div');
                 userMessage.className = 'message user-message';
                 userMessage.innerText = message;
                 chatMessages.appendChild(userMessage);
 
+                // Make POST request to chat-plan-a-trip route
+                // Returns json content
                 fetch("/chat-plan-a-trip", {
                     method: 'POST',
                     headers: {
@@ -202,6 +205,7 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    // If data comes back from request, append messages together and add to chat space as bot response
                     const botMessage = document.createElement('div');
                     botMessage.className = 'message bot-message';
                     botMessage.innerText = data.gpt_chat_response;
@@ -218,37 +222,6 @@
         function updateItinerary() {
             // Logic to update the itinerary
             alert('Update Itinerary functionality to be implemented');
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Listening for changes in the itinerary_data div
-            const itineraryOutput = document.getElementById('itinerary-output');
-            const observer = new MutationObserver((mutations) => {
-                for (const mutation of mutations) {
-                    if (mutation.type === 'childList') {
-                        document.getElementById('plan-your-trip-container').style.display = 'none';
-                        document.getElementById('chat-box').style.display = 'block';
-                    }
-                }
-            });
-
-            observer.observe(itineraryOutput, { childList: true, subtree: true });
-
-            document.getElementById('chat-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                sendMessage(event);
-            });
-        });
-
-        function toggleChat() {
-            const chatBox = document.getElementById('chat-box');
-            const chatContent = document.getElementById('chat-content');
-            if (chatBox.style.display === 'none' || chatBox.style.display === '') {
-                chatBox.style.display = 'flex';
-                chatContent.scrollTop = chatContent.scrollHeight;
-            } else {
-                chatBox.style.display = 'none';
-            }
         }
 
 
