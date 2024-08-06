@@ -24,7 +24,7 @@
                 <li><a href="{{ url_for('web.plan_a_trip') }}">Plan a Trip</a></li>
                 <li><a href="{{ url_for('web.recommendations') }}">Live Advice</a></li>
                 <li><a href="#history">History</a></li>
-                <li><a href="#support">Support</a></li>
+                <li><a href="{{ url_for('web.profile') }}">Profile</a></li>
             </ul>
             {% if 'profile' in session %}
                 <div class="user-info">
@@ -61,7 +61,7 @@
                                 <div class="accordion-content" id="{{ day }}">
                                     <ul>
                                         {% for event in events %}
-                                        <li onclick="updateRecommendations('{{ event.time }} - {{ event.activity }}', this.dataset.details)" data-details='{{ event | tojson | safe }}'>
+                                        <li onclick="updateRecommendations('{{ event.time }} - {{ event.activity }}', this.dataset.details, '{{ promptUrl }}')" data-details='{{ event | tojson | safe }}'>
                                             {{ event.time }} - {{ event.activity }}
                                         </li>
                                         {% endfor %}
@@ -156,9 +156,11 @@
     </script>
 
     <script>
+
         // Retrieve the itinerary data from the script tag
         const itineraryData = JSON.parse(document.getElementById('itinerary-data').textContent);
         const weatherData = JSON.parse(document.getElementById('weather-data').textContent);
+        const promptUrl = document.getElementById('promptUrl').textContent;
         let notificationMessagesText = "";
 
 
@@ -177,8 +179,9 @@
             return txt.value;
         }
 
-        function updateRecommendations(event, details) {
+        function updateRecommendations(event, details, promptUrl) {
             details = JSON.parse(details.replace(/&quot;/g,'"'));
+
             const recommendationContent = document.getElementById('recommendation-content');
             recommendationContent.innerHTML = `
                 <h2>${decodeHtmlEntities(event)}</h2>
@@ -186,6 +189,10 @@
                 <p><strong>Activity:</strong> ${decodeHtmlEntities(details.activity)}</p>
                 <p><strong>Average Duration:</strong> ${details["average duration"]} hours</p>
                 <p><strong>Cost:</strong> $${details.cost}</p>
+                <p><strong>Travel Method:</strong> ${details["travel methods"]}</p>
+                <p><strong>Nearby Food:</strong> ${details["nearby resteraunts"]}</p>
+                <p><strong>Tips:</strong> ${details.tips}</p>
+                <p><strong>Alternative Activity:</strong> ${details["nearby activity"]}</p>
             `;
         }
 

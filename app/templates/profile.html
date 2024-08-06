@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan a Trip - Travel Companion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/logo_white.png') }}" alt="Logo">
+            </div>
+            <ul>
+                <li><a href="{{ url_for('web.home') }}">Home</a></li>
+                <li><a href="{{ url_for('web.plan_a_trip') }}">Plan a Trip</a></li>
+                <li><a href="{{ url_for('web.recommendations') }}">Live Advice</a></li>
+                <li><a href="#history">History</a></li>
+                <li><a href="{{ url_for('web.profile') }}">Profile</a></li>
+            </ul>
+            {% if 'profile' in session %}
+                <div class="user-info">
+                    <button class="log-out" onclick="logout()"><span>{{ session['profile']['name'] }}</span></button>
+                </div>
+            {% else %}
+                <button class="log-in" onclick="openLoginModal()">Sign In</button>
+            {% endif %}
+        </nav>
+    </header>
+
+    <!-- Sign In Modal -->
+    <div id="signinModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Sign In</h2>
+            <button class="sign-in-btn github-btn" onclick="location.href='login/github'">Sign in with GitHub</button>
+            <button class="sign-in-btn google-btn" onclick="location.href='login/google'">Sign in with Google</button>
+            <button class="sign-in-btn facebook-btn" onclick="location.href='login/facebook'">Sign in with Facebook</button>
+        </div>
+    </div>
+
+    <main>
+        <section class="adventure">
+            <img src="{{ url_for('static', filename='images/mount_fuji_mst.jpg') }}" alt="Mountain">
+            <div class="profile-container">
+                <div class="profile-text">
+                    <h1>Profile Preferences</h1>
+                    <form class="profile-form" method="POST" href="{{ url_for('web.profile_post') }}">
+                        {% if age %}
+                        <label for="age">What is your age?</label>
+                        <input type="number" id="age" name="age"  min="1" placeholder="{{age}}" required>
+                        {% else %}
+                        <label for="age">What is your age?</label>
+                        <input type="number" id="age" name="age"  min="1" required>
+                        {% endif %}
+
+                        {% if travelStyle %}
+                        <label for="travel-style">What is your travel style? Vacationer, travler, etc.?</label>
+                        <input type="text" id="travel-style" name="travel-style" placeholder="{{travelStyle}}" required>
+                        {% else %}
+                        <label for="travel-style">What is your travel style? Vacationer, travler, etc.?</label>
+                        <input type="text" id="travel-style" name="travel-style" required>
+                        {% endif %}
+
+                        {% if travelPriorities %}
+                        <label for="travel-priorities">What activities do you prioritize when traveling?</label>
+                        <input type="text" id="travel-priorities" name="travel-priorities" placeholder="{{travelPriorities}}"  required>
+                        {% else %}
+                        <label for="travel-priorities">What activities do you prioritize when traveling?</label>
+                        <input type="text" id="travel-priorities" name="travel-priorities" required>
+                        {% endif %}
+
+                        {% if travelAvoidances %}
+                        <label for="travel-avoidances">What activites do you NOT want to do?</label>
+                        <input type="text" id="travel-avoidances" name="travel-avoidances" placeholder="{{travelAvoidances}}" vrequired>
+                        {% else %}
+                        <label for="travel-avoidances">What activites do you NOT want to do?</label>
+                        <input type="text" id="travel-avoidances" name="travel-avoidances" vrequired>
+                        {% endif %}
+
+                        {% if dietaryRestrictions %}
+                        <label for="dietary-restrictions">What dietary restrictions do you have, if any?</label>
+                        <input type="text" id="dietary-restrictions" name="dietary-restrictions" placeholder="{{dietaryRestrictions}}" required>
+                        {% else %}
+                        <label for="dietary-restrictions">What dietary restrictions do you have, if any?</label>
+                        <input type="text" id="dietary-restrictions" name="dietary-restrictions" required>
+                        {% endif %}
+
+                        {% if accomodations %}
+                        <label for="accomodations">Do you have any special accomodation needs?</label>
+                        <input type="text" id="accomodations" name="accomodations" placeholder="{{accomodations}}" required>
+                        {% else %}
+                        <label for="accomodations">Do you have any special accomodation needs?</label>
+                        <input type="text" id="accomodations" name="accomodations" required>
+                        {% endif %}
+
+                        <button type="submit" class="profile-submit-btn">Save Preferences</button>
+                    </form>
+                </div>
+        </section>
+    </main>
+    <footer>
+        <p>Copyright © Travel Companion 2024. All Rights Reserved.</p>
+    </footer>
+    <script>
+
+        function toggleAccordion(id) {
+            var content = document.getElementById(id);
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        }
+
+        function decodeHtmlEntities(str) {
+            var txt = document.createElement('textarea');
+            txt.innerHTML = str;
+            return txt.value;
+        }
+
+        function openLoginModal() {
+            document.getElementById('signinModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('signinModal').style.display = "none";
+        }
+
+        function logout() {
+            location.href = "{{ url_for('oauth.logout') }}";
+        }
+
+        // Close the modal if the user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('signinModal')) {
+                document.getElementById('signinModal').style.display = "none";
+        }
+    }
+    </script>
+</body>
+</html>
