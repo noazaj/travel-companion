@@ -94,11 +94,21 @@
             </div>
         </section>
 
+        <!-- <div class="chat-box" id="chat-box">
+            <div class="chat-header" onclick="toggleChat()">Chat with Us</div>
+            <div class="chat-content" id="chat-content"></div>
+            <div class="chat-input-container">
+                <input type="text" id="chat-input" name="message" placeholder="Type your message here..." required>
+                <button type="button" onclick="sendMessage()">Send</button>
+            </div>
+        </div> -->
+
         <div class="chat-box" id="chat-box">
             <button class="update-itinerary-btn" onclick="updateItinerary()">Update Itinerary</button>
             <div class="chat-messages" id="chat-messages"></div>
             <form id="chat-form" onsubmit="sendMessage(event)">
-                <input type="text" id="chat-input" name="message" placeholder="Type your message here..." required>
+                <!-- <input type="text" id="chat-input" name="message" placeholder="Type your message here..." required> -->
+                <textarea id="chat-input" name="message" rows="4" placeholder="Type your message here..."></textarea>
                 <button type="submit">Send</button>
             </form>
         </div>
@@ -108,14 +118,6 @@
         <p>Copyright © Travel Companion 2024. All Rights Reserved.</p>
     </footer>
     <script>
-        // const itineraryData = JSON.parse("{{ itinerary_data | default('{}', true) | tojson | safe }}");
-        // const itinerary = itineraryData || {};
-
-        // function replaceContent(event) {
-        //     event.preventDefault();
-        //     document.getElementById('plan-your-trip-container').style.display = 'none';
-        //     document.getElementById('chat-box').style.display = 'block';
-        // }
 
         function toggleAccordion(id) {
             var content = document.getElementById(id);
@@ -237,6 +239,17 @@
                 sendMessage(event);
             });
         });
+
+        function toggleChat() {
+            const chatBox = document.getElementById('chat-box');
+            const chatContent = document.getElementById('chat-content');
+            if (chatBox.style.display === 'none' || chatBox.style.display === '') {
+                chatBox.style.display = 'flex';
+                chatContent.scrollTop = chatContent.scrollHeight;
+            } else {
+                chatBox.style.display = 'none';
+            }
+        }
 
 
     </script>

@@ -123,8 +123,8 @@ footer {
 
 .plan-your-trip-text {
     position: absolute;
-    top: 27rem;
-    left: 30rem;
+    top: 25rem;
+    left: 15rem;
     transform: translate(-50%, -50%);
     text-align: center;
     color: #fff;
@@ -145,7 +145,7 @@ footer {
 .plan-your-trip-form input, .trip-form textarea {
     font-weight: bold;
     color: #fff;
-    background: rgba(156, 156, 156, 0.5);
+    background: rgba(117, 117, 117, 0.6);
     padding: 0.75rem;
     width: calc(100% - 1rem); /* Adjust for padding */
     /* padding: 10px; */
@@ -163,7 +163,7 @@ footer {
 .plan-your-trip-form textarea {
     font-weight: bold;
     color: #fff;
-    background: rgba(156, 156, 156, 0.5);
+    background: rgba(117, 117, 117, 0.6);
     padding: 1rem;
     resize: vertical;
     height: 50px;
@@ -191,14 +191,18 @@ footer {
     margin-top: 1rem;
 }
 
+.plan-your-trip-submit-btn:hover {
+    background: #3ca052;
+}
+
 
 .plan-your-trip-output {
     position: absolute;
-    top: 26rem;
-    left: 80rem;
+    top: 28rem;
+    left: 57.5rem;
     transform: translate(-50%, -50%);
     text-align: center;
-    width: 42rem;
+    width: 54rem;
 }
 
 .plan-your-trip-output h1 {
@@ -209,15 +213,15 @@ footer {
 
 
 .plan-your-trip-recommendation-container {
-    background: rgba(156, 156, 156, 0.5);
+    background: rgba(117, 117, 117, 0.6);
     color: #fff;
     font-size: 1.2rem;
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    min-height: 32rem; /* Placeholder height */
+    min-height: 39rem; /* Placeholder height */
     overflow-y: auto;
-    max-height: 32rem;
+    max-height: 39rem;
 }
 
 .accordion-item {
@@ -237,7 +241,7 @@ footer {
 }
 
 .accordion-header:hover {
-    background-color: #ffffff6b;
+    background-color: #91ffcd63;
 }
 
 .accordion-content {
@@ -260,45 +264,51 @@ footer {
 }
 
 .accordion-content ul li:hover {
-    background-color: #ffffff6b;
+    background-color: #91ffcd63;
 }
 
-
-
-/* Chat box styles */
 /* Chat box styles */
 .chat-box {
     position: fixed;
-    bottom: 0;
+    bottom: 2.75rem;
     right: 0;
-    width: 300px;
-    background: rgba(255, 255, 255, 0.8);
+    width: 19rem;
+    background: rgba(117, 117, 117, 0.6);
     border-radius: 10px;
     padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 20px;
     z-index: 1000;
 }
 
 .update-itinerary-btn {
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 10px;
+    font-weight: bold;
+    background: none;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
     cursor: pointer;
-    margin-bottom: 10px;
+    text-align: center;
+    display: inline-block;
+    white-space: normal;
+    word-wrap: break-word;
+    border-radius: 5px;
+    width: 11rem;
+    height: 3rem;
+    margin-top: 0rem;
+    margin-bottom: 0.5rem;
+    margin-left:4rem;
 }
 
 .update-itinerary-btn:hover {
-    background: #218838;
+    background: #3ca052;
 }
 
 .chat-messages {
-    height: 200px;
+    height: 34rem;
     overflow-y: auto;
-    padding: 10px;
-    background: #f4f4f4;
+    padding: 1rem;
+    background: rgba(59, 59, 59, 0.671);
     border-radius: 10px;
     margin-bottom: 10px;
 }
@@ -311,7 +321,8 @@ footer {
 
 .user-message {
     background: #d1e7dd;
-    align-self: flex-end;
+    /* align-self: flex-end; */
+    overflow-y: auto;
 }
 
 .bot-message {
@@ -325,24 +336,43 @@ footer {
 }
 
 #chat-input {
-    flex: 1;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    background-color: white;
+    font-weight: bold;
+    background: none;
+    color: #fff;
+    background: rgba(59, 59, 59, 0.671);
+    padding: 1rem;
+    resize: vertical;
+    height: 50px;
+    width: calc(100% - 1rem); 
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    font-size: 1rem;
 }
+
+#chat-input::placeholder {
+    font-weight: bold;
+    color: #fff; /* Change this to your desired placeholder color */
+}
+
 
 #chat-form button {
+    font-weight: bold;
+    background: none;
+    color: #fff;
+    border: 2px solid white;
     padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    background: #007bff;
-    color: white;
     cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    white-space: normal;
+    word-wrap: break-word;
+    border-radius: 10px;
+    max-height: 3rem;
+    margin-top: 1rem;
 }
 
-#chat-form button:hover {
-    background: #0056b3;
+#chat-form button:hover  {
+    background: #3ca052;
 }
 
 
