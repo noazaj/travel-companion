@@ -14,8 +14,7 @@ notification_update = {}
 get_itinerary_data = {}
 get_weather_data = {}
 
-PROMPT_SVC_HOST = os.getenv('PROMPT_SVC_HOST')
-PROMPT_SVC_PORT = os.getenv('PROMPT_SVC_PORT')
+PROMPT_SVC_URL = os.getenv('PROMPT_SVC_URL')
 
 
 @web_bp.route('/', methods=['GET'])
@@ -128,7 +127,9 @@ def get_notification():
 #
 ###########################################################
 def promptServiceInitialReq(content):
+
     r = requests.post(f'{promptSvcUrl()}/v1/prompt/initial-trip-planning-req',
+
                       json=content)
     response = r.json()
     gpt_message = response['gpt-message']
@@ -138,8 +139,11 @@ def promptServiceInitialReq(content):
 
 
 def promptServiceChat(messages):
+
     return requests.post(f'{promptSvcUrl()}/v1/prompt/itinerary',
                          json={"messages": messages})
+
+
 
 
 def fetch_weather_update(location):
@@ -147,7 +151,9 @@ def fetch_weather_update(location):
     global get_weather_data
 
     weather_payload = {"location": location}
+
     url = f'{promptSvcUrl()}/v1/prompt/weather'
+
     r = requests.post(url, json=weather_payload)
 
     if r.status_code == 200:
