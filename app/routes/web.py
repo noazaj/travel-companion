@@ -14,8 +14,7 @@ notification_update = {}
 get_itinerary_data = {}
 get_weather_data = {}
 
-PROMPT_SVC_HOST = os.getenv('PROMPT_SVC_HOST')
-PROMPT_SVC_PORT = os.getenv('PROMPT_SVC_PORT')
+PROMPT_SVC_URL = os.getenv('PROMPT_SVC_URL')
 
 
 @web_bp.route('/', methods=['GET'])
@@ -80,14 +79,6 @@ def recommendations():
         abort(404)
 
 
-@web_bp.route('/login-method', methods=['GET'])
-def login_method():
-    try:
-        return render_template('login-method.html')
-    except TemplateNotFound:
-        abort(404)
-
-
 @web_bp.route('/get-notification', methods=['GET'])
 def get_notification():
     return jsonify(notification_update)
@@ -105,7 +96,7 @@ def get_notification():
 #
 ###########################################################
 def promptServiceInitialReq(content):
-    r = requests.post('http://' + PROMPT_SVC_HOST + ':' + PROMPT_SVC_PORT +
+    r = requests.post(PROMPT_SVC_URL +
                       '/v1/prompt/initial-trip-planning-req',
                       json=content)
     response = r.json()
@@ -115,9 +106,10 @@ def promptServiceInitialReq(content):
     return gpt_message
 
 
+
 def promptServiceChat(content):
 
-    r = requests.post('http://' + PROMPT_SVC_HOST + ':' + PROMPT_SVC_PORT +
+    r = requests.post(PROMPT_SVC_URL +
                       '/v1/prompt/trip-planning-chat',
                       json=content)
     response = r.json()
@@ -131,7 +123,7 @@ def fetch_weather_update(location):
     global get_weather_data
 
     weather_payload = {"location": location}
-    url = f'http://{PROMPT_SVC_HOST}:{PROMPT_SVC_PORT}/v1/prompt/weather'
+    url = f'{PROMPT_SVC_URL}/v1/prompt/weather'
     r = requests.post(url, json=weather_payload)
 
     if r.status_code == 200:
