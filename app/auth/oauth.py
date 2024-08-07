@@ -5,7 +5,8 @@ from flask import (
     redirect,
     current_app,
     abort,
-    request
+    request,
+    g
 )
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
@@ -75,6 +76,9 @@ def oauth2_login(provider):
 ##############################################
 @oauth_bp.route('/authorize/<provider>')
 def oauth2_authorize(provider):
+    # Get database connection
+    conn = g.get('conn')
+    
     # Create the client to be used for authorization
     client = oauth.create_client(provider)
     if not client:
