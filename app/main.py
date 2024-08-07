@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, g
 from app.auth.oauth import oauth_bp, configure_oauth
 from app.routes.web import web_bp, fetch_weather_update
+from db.connection import connect_pg
 from dotenv import load_dotenv
 import threading
 
@@ -16,6 +17,19 @@ def start_notification_thread():
 
 app = Flask(__name__)
 app.config.from_object('app.config.DevelopmentConfig')
+
+
+# Store the connection in g
+@app.before_request
+def before_request():
+    if 'conn' not in g:
+        g.conn = connect_pg()
+
+@app.teardown_appcontext
+def teardown_appcontext(exception):
+    conn = g.pop('conn', None)
+    if conn is not None:
+        conn.close()
 
 # Initialize OAuth2.0 providers configurations
 configure_oauth(app)
