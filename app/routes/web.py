@@ -60,7 +60,52 @@ def recommendations():
         return render_template('recommendations.html',
                                notification_update=notification_update,
                                weather_data=weather_data,
-                               itinerary_data=itinerary_data_out)
+                               itinerary_data=itinerary_data_out,
+                               promptUrl=promptSvcUrl())
+    except TemplateNotFound:
+        abort(404)
+
+
+@web_bp.route('/login-method', methods=['GET'])
+def login_method():
+    try:
+        return render_template('login-method.html')
+    except TemplateNotFound:
+        abort(404)
+
+
+@web_bp.route('/profile', methods=['GET'])
+def profile():
+    try:
+        return render_template('profile.html')
+    except TemplateNotFound:
+        abort(404)
+
+
+@web_bp.route('/profile', methods=['POST'])
+def profile_post():
+
+    # Get form data
+    content = request.form
+    age = content.get('age')
+    travelStyle = content.get('travel-style')
+    travelPriorities = content.get('travel-priorities')
+    travelAvoidances = content.get('travel-avoidances')
+    dietaryRestrictions = content.get('dietary-restrictions')
+    accomodations = content.get('accomodations')
+
+    # Save to database
+
+    # Fetch from database and reload profile
+
+    try:
+        return render_template('profile.html',
+                               age=age,
+                               travelStyle=travelStyle,
+                               travelPriorities=travelPriorities,
+                               travelAvoidances=travelAvoidances,
+                               dietaryRestrictions=dietaryRestrictions,
+                               accomodations=accomodations)
     except TemplateNotFound:
         abort(404)
 
@@ -82,8 +127,9 @@ def get_notification():
 #
 ###########################################################
 def promptServiceInitialReq(content):
-    r = requests.post(PROMPT_SVC_URL +
-                      '/v1/prompt/initial-trip-planning-req',
+
+    r = requests.post(f'{promptSvcUrl()}/v1/prompt/initial-trip-planning-req',
+
                       json=content)
     response = r.json()
     gpt_message = response['gpt-message']
@@ -93,8 +139,11 @@ def promptServiceInitialReq(content):
 
 
 def promptServiceChat(messages):
-    return requests.post(PROMPT_SVC_URL +
-                         '/v1/prompt/itinerary', json={"messages": messages})
+
+    return requests.post(f'{promptSvcUrl()}/v1/prompt/itinerary',
+                         json={"messages": messages})
+
+
 
 
 def fetch_weather_update(location):
@@ -102,7 +151,9 @@ def fetch_weather_update(location):
     global get_weather_data
 
     weather_payload = {"location": location}
-    url = f'{PROMPT_SVC_URL}/v1/prompt/weather'
+
+    url = f'{promptSvcUrl()}/v1/prompt/weather'
+
     r = requests.post(url, json=weather_payload)
 
     if r.status_code == 200:
@@ -114,6 +165,10 @@ def fetch_weather_update(location):
             'message': f"{get_weather_data}",
             'link': '/recommendations'
         }
+
+
+def promptSvcUrl():
+    return f'http://{PROMPT_SVC_HOST}:{PROMPT_SVC_PORT}'
 
 
 def generate_weather_data(weather_data):
