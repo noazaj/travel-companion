@@ -1,6 +1,6 @@
 from flask import Flask
-from app.auth.oauth import oauth_bp, configure_oauth
-from app.routes.web import web_bp, fetch_weather_update
+from auth.oauth import oauth_bp, configure_oauth
+from routes.web import web_bp, fetch_weather_update
 from dotenv import load_dotenv
 import threading
 
@@ -15,7 +15,7 @@ def start_notification_thread():
 
 
 app = Flask(__name__)
-app.config.from_object('app.config.DevelopmentConfig')
+app.config.from_object('config.DevelopmentConfig')
 
 # Initialize OAuth2.0 providers configurations
 configure_oauth(app)
@@ -29,4 +29,4 @@ start_notification_thread()
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='127.0.0.1', port=8080, debug=True)
