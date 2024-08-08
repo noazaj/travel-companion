@@ -196,7 +196,7 @@ Kongkom Hiranpradit, Connor Flattum, Nathan Swaim, Noah Zajicek -->
 
                 // Make POST request to chat-plan-a-trip route
                 // Returns json content
-                fetch("/chat-plan-a-trip", {
+                fetch("/chat-plan-a-trip/"+{{trip_id}}, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
