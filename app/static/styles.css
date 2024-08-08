@@ -1,3 +1,7 @@
+/* CS467 Online Capstone: GPT API Challenge
+Kongkom Hiranpradit, Connor Flattum, Nathan Swaim, Noah Zajicek */
+
+/* Initial body setup for headers/ nav and main page */
 body {
     font-family: Arial, sans-serif;
     background-color: #fff;
@@ -55,6 +59,7 @@ main {
 }
 
 /* Home ui css */
+/* adventure theme and image is supported across all UI */
 .adventure {
     height: 100vh;
     overflow: hidden;
@@ -113,7 +118,7 @@ footer {
     bottom: 0;
 }
 
-/* Plan a trip css  */
+/* Plan a trip */
 .plan-your-trip-container {
     display: flex;
     justify-content: center;
@@ -123,8 +128,8 @@ footer {
 
 .plan-your-trip-text {
     position: absolute;
-    top: 27rem;
-    left: 30rem;
+    top: 25rem;
+    left: 15rem;
     transform: translate(-50%, -50%);
     text-align: center;
     color: #fff;
@@ -145,10 +150,9 @@ footer {
 .plan-your-trip-form input, .trip-form textarea {
     font-weight: bold;
     color: #fff;
-    background: rgba(156, 156, 156, 0.5);
+    background: rgba(117, 117, 117, 0.6);
     padding: 0.75rem;
-    width: calc(100% - 1rem); /* Adjust for padding */
-    /* padding: 10px; */
+    width: calc(100% - 1rem); 
     border: 1px solid #ccc;
     border-radius: 5px;
     height: 1rem;
@@ -157,13 +161,13 @@ footer {
 
 .plan-your-trip-form textarea::placeholder {
     font-weight: bold;
-    color: #fff; /* Change this to your desired placeholder color */
+    color: #fff; 
 }
 
 .plan-your-trip-form textarea {
     font-weight: bold;
     color: #fff;
-    background: rgba(156, 156, 156, 0.5);
+    background: rgba(117, 117, 117, 0.6);
     padding: 1rem;
     resize: vertical;
     height: 50px;
@@ -191,14 +195,18 @@ footer {
     margin-top: 1rem;
 }
 
+.plan-your-trip-submit-btn:hover {
+    background: #3ca052;
+}
+
 
 .plan-your-trip-output {
     position: absolute;
-    top: 26rem;
-    left: 80rem;
+    top: 28rem;
+    left: 57.5rem;
     transform: translate(-50%, -50%);
     text-align: center;
-    width: 42rem;
+    width: 54rem;
 }
 
 .plan-your-trip-output h1 {
@@ -209,17 +217,18 @@ footer {
 
 
 .plan-your-trip-recommendation-container {
-    background: rgba(156, 156, 156, 0.5);
+    background: rgba(117, 117, 117, 0.6);
     color: #fff;
     font-size: 1.2rem;
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    min-height: 32rem; /* Placeholder height */
+    min-height: 39rem; 
     overflow-y: auto;
-    max-height: 32rem;
+    max-height: 39rem;
 }
 
+/* Accoridan on plan a trip page */
 .accordion-item {
     margin-bottom: 0px;
 }
@@ -237,7 +246,7 @@ footer {
 }
 
 .accordion-header:hover {
-    background-color: #ffffff6b;
+    background-color: #91ffcd63;
 }
 
 .accordion-content {
@@ -260,7 +269,114 @@ footer {
 }
 
 .accordion-content ul li:hover {
-    background-color: #ffffff6b;
+    background-color: #91ffcd63;
+}
+
+/* Chat box on plan a trip page */
+.chat-box {
+    position: fixed;
+    bottom: 2.75rem;
+    right: 0;
+    width: 19rem;
+    background: rgba(117, 117, 117, 0.6);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 20px;
+    z-index: 1000;
+}
+
+.update-itinerary-btn {
+    font-weight: bold;
+    background: none;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    white-space: normal;
+    word-wrap: break-word;
+    border-radius: 5px;
+    width: 11rem;
+    height: 3rem;
+    margin-top: 0rem;
+    margin-bottom: 0.5rem;
+    margin-left:4rem;
+}
+
+.update-itinerary-btn:hover {
+    background: #3ca052;
+}
+
+.chat-messages {
+    height: 34rem;
+    overflow-y: auto;
+    padding: 1rem;
+    background: rgba(59, 59, 59, 0.671);
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.message {
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 10px;
+}
+
+.user-message {
+    background: #d1e7dd;
+    overflow-y: auto;
+}
+
+.bot-message {
+    background: #f8d7da;
+    align-self: flex-start;
+}
+
+#chat-form {
+    display: flex;
+    gap: 10px;
+}
+
+#chat-input {
+    font-weight: bold;
+    background: none;
+    color: #fff;
+    background: rgba(59, 59, 59, 0.671);
+    padding: 1rem;
+    resize: vertical;
+    height: 50px;
+    width: calc(100% - 1rem); 
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#chat-input::placeholder {
+    font-weight: bold;
+    color: #fff; 
+}
+
+
+#chat-form button {
+    font-weight: bold;
+    background: none;
+    color: #fff;
+    border: 2px solid white;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    white-space: normal;
+    word-wrap: break-word;
+    border-radius: 10px;
+    max-height: 3rem;
+    margin-top: 1rem;
+}
+
+#chat-form button:hover  {
+    background: #3ca052;
 }
 
 
@@ -273,6 +389,7 @@ footer {
     padding: 2rem;
 }
 
+/* Calendar section in recommendations page */
 .calendar {
     top: 20rem;
     left: 70rem;
@@ -302,14 +419,6 @@ footer {
     background-color: #eaeaea;
 }
 
-.recommendations {
-    top: 20rem;
-    left: 70rem;
-    flex: 1;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-}
 
 .weather {
     top: 20rem;
@@ -318,6 +427,15 @@ footer {
     padding: 1rem;
     border-radius: 5px;
     margin-bottom: 1rem;
+}
+
+.recommendations {
+    top: 20rem;
+    left: 70rem;
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .recommendations-list {
@@ -399,8 +517,8 @@ footer {
     color: white;
 }
 
+/* Notification banner on recommendations page*/
 /* Notification banner */
-
 .notification-banner {
     background-color: #f44336;
     color: white;
@@ -419,7 +537,7 @@ footer {
     padding: 0;
     font-size: 1.2rem;
 }
-
+/* notification close button */
 .notification-banner .close-btn {
     background: none;
     border: none;

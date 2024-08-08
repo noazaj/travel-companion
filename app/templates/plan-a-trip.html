@@ -1,3 +1,6 @@
+<!-- CS467 Online Capstone: GPT API Challenge
+Kongkom Hiranpradit, Connor Flattum, Nathan Swaim, Noah Zajicek -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,8 +46,8 @@
     <main>
         <section class="adventure">
             <img src="{{ url_for('static', filename='images/ocean_boats.jpg') }}" alt="Mountain">
-            <div class="plan-your-trip-container">
-                <div class="plan-your-trip-text">
+            <div class="plan-your-trip-container" >
+                <div class="plan-your-trip-text" id="plan-your-trip-container">
                     <h1>Plan Your Trip</h1>
                     <form class="plan-your-trip-form" method="POST" href="{{ url_for('web.plan_a_trip_post') }}">
                         <label for="destination">Destination:</label>
@@ -62,7 +65,7 @@
                         <label for="preferences">Travel Preferences:</label>
                         <textarea id="preferences" name="preferences" rows="4" placeholder="Describe your travel preferences..."></textarea>
                         
-                        <button type="submit" class="plan-your-trip-submit-btn">Get Itinerary</button>
+                        <button type="submit" class="plan-your-trip-submit-btn">Get Itinerary </button>
                     </form>
                 </div>
                 <div class="plan-your-trip-output">
@@ -87,20 +90,28 @@
                                 {% endfor %}
                             {% else %}
                             <p>No events planned for this itinerary.</p>
-                        {% endif %}
+                            {% endif %}
                         </div> 
                     </div>
                 </div>
             </div>
         </section>
+        <div class="chat-box" id="chat-box">
+            <button class="update-itinerary-btn" onclick="updateItinerary()">Update Itinerary</button>
+            <div class="chat-messages" id="chat-messages"></div>
+            <form id="chat-form" onsubmit="sendMessage(event)">
+                <!-- <input type="text" id="chat-input" name="message" placeholder="Type your message here..." required> -->
+                <textarea id="chat-input" name="message" rows="4" placeholder="Type your message here..."></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+
     </main>
     <footer>
         <p>Copyright © Travel Companion 2024. All Rights Reserved.</p>
     </footer>
     <script>
-        // const itineraryData = JSON.parse("{{ itinerary_data | default('{}', true) | tojson | safe }}");
-        // const itinerary = itineraryData || {};
-
+        // Toggle accordian dropdown
         function toggleAccordion(id) {
             var content = document.getElementById(id);
             if (content.style.display === "block") {
@@ -110,14 +121,18 @@
             }
         }
 
+        // Set text entities as strings
         function decodeHtmlEntities(str) {
             var txt = document.createElement('textarea');
             txt.innerHTML = str;
             return txt.value;
         }
 
+        // Show event details in fancy drop dropdown
         function showEventDetails(element) {
-            const details = JSON.parse(element.dataset.details.replace(/&quot;/g,'"'));
+            // Parse details
+            const details = JSON.parse(element.dataset.details.replace(/&quot;/g, '"'));
+            // Set content to html structure
             const detailsContent = `
                 <h2>${decodeHtmlEntities(element.innerText)}</h2>
                 <p><strong>Location:</strong> ${decodeHtmlEntities(details.location)}</p>
@@ -129,14 +144,19 @@
             detailsContainer.innerHTML = detailsContent;
             detailsContainer.className = 'event-details';
 
-            // Remove existing details if any
+            // Remove any pre existing details
             const existingDetails = element.parentElement.querySelector('.event-details');
             if (existingDetails) {
                 existingDetails.remove();
             }
 
-            // Append the new details
+            // add the new details to container
             element.parentElement.appendChild(detailsContainer);
+
+            // Add details to chat box with pre filled input
+            const chatInput = document.getElementById('chat-input');
+            chatInput.value = `I want a different travel recommendation to ${details.activity} at ${details.time} on ${details.location}.`;
+            chatInput.focus();
         }
 
         function openLoginModal() {
@@ -155,8 +175,56 @@
         window.onclick = function(event) {
             if (event.target == document.getElementById('signinModal')) {
                 document.getElementById('signinModal').style.display = "none";
+            }
         }
-    }
+
+        // Chat box message post and structureing
+        function sendMessage(event) {
+            // Prevent unwanted clicks
+            event.preventDefault();
+
+            // Get chat input details
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (message) {
+                // Get chat message from user and output in chat space
+                const chatMessages = document.getElementById('chat-messages');
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user-message';
+                userMessage.innerText = message;
+                chatMessages.appendChild(userMessage);
+
+                // Make POST request to chat-plan-a-trip route
+                // Returns json content
+                fetch("/chat-plan-a-trip", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // If data comes back from request, append messages together and add to chat space as bot response
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'message bot-message';
+                    botMessage.innerText = data.gpt_chat_response;
+                    chatMessages.appendChild(botMessage);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                })
+                .catch(error => console.error('Error:', error));
+
+                input.value = '';
+            }
+        }
+
+
+        function updateItinerary() {
+            // Logic to update the itinerary
+            alert('Update Itinerary functionality to be implemented');
+        }
+
+
     </script>
 </body>
 </html>
