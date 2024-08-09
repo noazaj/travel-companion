@@ -18,8 +18,6 @@ oauth_bp = Blueprint('oauth', __name__)
 oauth = OAuth()
 database = Database()
 
-database.drop_table('users')
-
 # Create user table if it doesn't exist
 database.create_user_table()
 
