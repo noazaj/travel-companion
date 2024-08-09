@@ -77,7 +77,6 @@ def oauth2_login(provider):
 ##############################################
 @oauth_bp.route('/authorize/<provider>')
 def oauth2_authorize(provider):
-    database.drop_table('users')
     # Create user table if it doesn't exist
     database.create_user_table()
     
