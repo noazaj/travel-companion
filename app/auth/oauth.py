@@ -18,6 +18,11 @@ oauth_bp = Blueprint('oauth', __name__)
 oauth = OAuth()
 database = Database()
 
+database.drop_table('users')
+
+# Create user table if it doesn't exist
+database.create_user_table()
+
 
 def configure_oauth(app):
     oauth.init_app(app=app)
@@ -77,9 +82,6 @@ def oauth2_login(provider):
 ##############################################
 @oauth_bp.route('/authorize/<provider>')
 def oauth2_authorize(provider):
-    # Create user table if it doesn't exist
-    database.create_user_table()
-    
     # Create the client to be used for authorization
     client = oauth.create_client(provider)
     if not client:
